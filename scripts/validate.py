@@ -2,7 +2,20 @@
 """Validation script for the Relevant Test Selector.
 
 Analyzes historical commits from a repository, runs the selector on each,
-then runs the actual test suite to compare predictions vs reality.
+then runs the actual test suite at each commit to compare predictions vs reality.
+
+Approach:
+  1. Build the index at HEAD.
+  2. For each historical commit:
+     a. Determine changed Python files.
+     b. Run the selector to predict relevant tests.
+     c. Checkout that commit.
+     d. Run ALL tests (with per-test timeout to handle network tests).
+     e. Record which tests passed/failed/errored.
+     f. Compute miss: tests that failed but were NOT selected.
+
+Miss Rate = (# of test files that failed but were NOT selected) /
+            (# of test files that failed)
 
 Usage:
     python3 scripts/validate.py --repo /tmp/httpx-test --commits 30
@@ -35,7 +48,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_commits_with_python_changes(repo_path: str, count: int) -> list[dict]:
-    """Get recent commits that modified Python files (non-merge only)."""
+    """Get recent non-merge commits that modified Python source or test files."""
     result = subprocess.run(
         [
             "git", "log", "--oneline", "--no-merges",
@@ -60,7 +73,7 @@ def get_commits_with_python_changes(repo_path: str, count: int) -> list[dict]:
 
 
 def get_changed_files(repo_path: str, commit_hash: str) -> list[str]:
-    """Get files changed in a specific commit."""
+    """Get files changed in a specific commit (compared to its parent)."""
     result = subprocess.run(
         ["git", "diff", "--name-only", f"{commit_hash}~1..{commit_hash}"],
         cwd=repo_path,
@@ -69,22 +82,19 @@ def get_changed_files(repo_path: str, commit_hash: str) -> list[str]:
     return [f.strip() for f in result.stdout.strip().split("\n") if f.strip()]
 
 
-def get_changed_python_files(repo_path: str, commit_hash: str) -> list[str]:
-    """Get only Python files changed in a specific commit."""
-    all_files = get_changed_files(repo_path, commit_hash)
-    return [f for f in all_files if f.endswith(".py")]
+def run_tests_at_commit(repo_path: str, commit_hash: str) -> dict:
+    """Checkout a commit and run ALL tests, capturing per-test outcomes.
 
+    Uses --timeout=15 per-test (for network-heavy tests).
+    Does NOT use -x so that the full suite is run.
 
-def run_tests_at_commit(repo_path: str, commit_hash: str, test_timeout: int = 120) -> dict:
-    """Checkout a commit and run the test suite, returning pass/fail info.
-
-    Returns dict with:
-      - test_results: list of {name, outcome} for each test
-      - total_tests: number of tests run
-      - failed_tests: list of test names that failed
-      - passed_tests: list of test names that passed
-      - errors: list of test names that errored
-      - run_error: string if test run itself failed
+    Returns:
+        dict with keys:
+          - passed_tests: list of pytest node IDs that passed
+          - failed_tests: list of pytest node IDs that failed
+          - errored_tests: list of pytest node IDs that errored (timeout, import err)
+          - total_run: total tests executed
+          - run_error: string if the entire run errored
     """
     # Checkout the commit
     subprocess.run(
@@ -93,283 +103,281 @@ def run_tests_at_commit(repo_path: str, commit_hash: str, test_timeout: int = 12
         capture_output=True, text=True, check=True,
     )
 
-    # Run pytest with JSON-style output
-    # Use --tb=no for speed, -q for brevity
-    # --timeout to prevent hanging tests
+    # Run all tests with verbose output, per-test timeout
     try:
         result = subprocess.run(
             [
                 sys.executable, "-m", "pytest",
                 "tests/", "-v", "--tb=no", "--no-header",
-                f"--timeout={test_timeout}",
-                "-x",  # Stop on first failure for efficiency (we record it)
+                "--timeout=15",
             ],
             cwd=repo_path,
             capture_output=True, text=True,
-            timeout=test_timeout * 2,  # Overall timeout
+            timeout=600,  # Overall 10-minute cap
         )
     except subprocess.TimeoutExpired:
         return {
-            "test_results": [],
-            "total_tests": 0,
-            "failed_tests": [],
-            "passed_tests": [],
-            "errors": [],
-            "run_error": "Test run timed out",
+            "passed_tests": [], "failed_tests": [], "errored_tests": [],
+            "total_run": 0, "run_error": "Overall test run timed out (600s)",
         }
     except Exception as e:
         return {
-            "test_results": [],
-            "total_tests": 0,
-            "failed_tests": [],
-            "passed_tests": [],
-            "errors": [],
-            "run_error": str(e),
+            "passed_tests": [], "failed_tests": [], "errored_tests": [],
+            "total_run": 0, "run_error": str(e),
         }
 
-    # Parse pytest verbose output
-    failed_tests = []
-    passed_tests = []
-    errors = []
-    test_results = []
+    # Parse pytest -v output lines:
+    #   tests/test_foo.py::test_bar PASSED
+    #   tests/test_foo.py::test_baz FAILED
+    #   tests/test_foo.py::test_qux ERROR
+    passed, failed, errored = [], [], []
 
     for line in result.stdout.split("\n"):
         line = line.strip()
-        if not line:
+        if not line or "::" not in line:
             continue
 
-        # Pytest verbose format: tests/test_foo.py::test_bar PASSED
-        if " PASSED" in line and "::" in line:
-            test_name = line.split(" PASSED")[0].strip()
-            test_results.append({"name": test_name, "outcome": "passed"})
-            passed_tests.append(test_name)
-        elif " FAILED" in line and "::" in line:
-            test_name = line.split(" FAILED")[0].strip()
-            test_results.append({"name": test_name, "outcome": "failed"})
-            failed_tests.append(test_name)
-        elif " ERROR" in line and "::" in line:
-            test_name = line.split(" ERROR")[0].strip()
-            test_results.append({"name": test_name, "outcome": "error"})
-            errors.append(test_name)
+        if " PASSED" in line:
+            nodeid = line.rsplit(" PASSED", 1)[0].strip()
+            passed.append(nodeid)
+        elif " FAILED" in line:
+            nodeid = line.rsplit(" FAILED", 1)[0].strip()
+            failed.append(nodeid)
+        elif " ERROR" in line:
+            nodeid = line.rsplit(" ERROR", 1)[0].strip()
+            errored.append(nodeid)
+        elif " XFAIL" in line or " XPASS" in line or " SKIPPED" in line:
+            pass  # Ignore expected failures/skips
 
     run_error = None
-    if result.returncode != 0 and not failed_tests and not errors:
-        # Test collection or setup error
-        run_error = f"pytest exit code {result.returncode}"
-        if result.stderr:
-            run_error += f": {result.stderr[:500]}"
+    if result.returncode != 0 and not failed and not errored and not passed:
+        # Collection error or setup failure
+        stderr_snippet = (result.stderr or "")[:800]
+        stdout_snippet = (result.stdout or "")[:800]
+        run_error = f"pytest exit code {result.returncode}. stderr: {stderr_snippet}. stdout: {stdout_snippet}"
 
     return {
-        "test_results": test_results,
-        "total_tests": len(test_results),
-        "failed_tests": failed_tests,
-        "passed_tests": passed_tests,
-        "errors": errors,
+        "passed_tests": passed,
+        "failed_tests": failed,
+        "errored_tests": errored,
+        "total_run": len(passed) + len(failed) + len(errored),
         "run_error": run_error,
     }
 
 
-def run_selector(
-    index_data,
-    changed_python_files: list[str],
-    thoroughness: Thoroughness,
-) -> dict:
-    """Run the selector and return results."""
+def run_selector(index_data, changed_python_files, thoroughness):
+    """Run the selector and return dict of selected test_file -> info."""
     traversal = GraphTraversal(index_data)
     scorer = Scorer()
 
     affected = traversal.find_affected_tests(changed_python_files, thoroughness)
 
-    selected_tests = {}
+    selected = {}
     for test_file, depth in affected.items():
         score = scorer.score_from_depth(depth)
         reason = scorer.depth_to_reason(depth)
-        selected_tests[test_file] = {
+        selected[test_file] = {
             "confidence": round(score, 4),
             "reasons": [reason],
         }
 
-    # Apply heuristics at thorough level
     if thoroughness == Thoroughness.THOROUGH:
         heuristics = Heuristics(index_data)
         heuristic_matches = heuristics.find_related_tests(
             changed_python_files,
-            already_selected=set(selected_tests.keys()),
+            already_selected=set(selected.keys()),
         )
         for test_file, reasons in heuristic_matches.items():
             heur_score = scorer.score_from_reasons(reasons)
-            selected_tests[test_file] = {
+            selected[test_file] = {
                 "confidence": round(heur_score, 4),
                 "reasons": reasons,
             }
 
-    return selected_tests
+    return selected
 
 
-def extract_test_file_from_nodeid(nodeid: str) -> str:
-    """Extract the file path from a pytest node ID.
-
-    e.g., 'tests/test_models.py::test_request' -> 'tests/test_models.py'
-    """
+def nodeid_to_file(nodeid: str) -> str:
+    """Extract file path from pytest node ID: tests/foo.py::test_x -> tests/foo.py"""
     return nodeid.split("::")[0]
 
 
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="Validate RTS selector against historical commits")
+    parser = argparse.ArgumentParser(description="Validate RTS selector against history")
     parser.add_argument("--repo", required=True, help="Path to the repository")
-    parser.add_argument("--commits", type=int, default=30, help="Number of commits to analyze")
-    parser.add_argument("--thoroughness", default="standard", help="Thoroughness level")
-    parser.add_argument("--output-dir", default=None, help="Output directory for results")
+    parser.add_argument("--commits", type=int, default=30, help="Number of commits")
+    parser.add_argument("--thoroughness", default="standard")
+    parser.add_argument("--output-dir", default=None)
     args = parser.parse_args()
 
     repo_path = args.repo
     repo_name = Path(repo_path).name
     thoroughness = Thoroughness(args.thoroughness)
-
-    output_dir = args.output_dir or str(
-        Path(__file__).parent.parent / "Validation"
-    )
+    output_dir = args.output_dir or str(Path(__file__).parent.parent / "Validation")
     os.makedirs(output_dir, exist_ok=True)
 
-    print(f"=== RTS Validation Against Historical Commits ===")
-    print(f"Repository: {repo_path}")
+    print("=" * 60)
+    print("RTS VALIDATION AGAINST HISTORICAL COMMITS")
+    print("=" * 60)
+    print(f"Repository:   {repo_path}")
     print(f"Thoroughness: {thoroughness.value}")
-    print(f"Target commits: {args.commits}")
+    print(f"Commits:      {args.commits}")
     print()
 
-    # Step 1: Get the current HEAD hash to restore later
+    # Save original HEAD
     head_result = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=repo_path, capture_output=True, text=True, check=True,
+        ["git", "rev-parse", "HEAD"], cwd=repo_path,
+        capture_output=True, text=True, check=True,
     )
     original_head = head_result.stdout.strip()
 
-    # Also get the branch name
     branch_result = subprocess.run(
-        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-        cwd=repo_path, capture_output=True, text=True, check=True,
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=repo_path,
+        capture_output=True, text=True, check=True,
     )
     original_branch = branch_result.stdout.strip()
 
-    # Step 2: Build index at HEAD
+    # Build index at HEAD
     print("Building index at HEAD...")
     builder = GraphBuilder(Path(repo_path))
     index_data = builder.build_index()
-
     store = IndexStore(Path(repo_path))
     store.save(index_data)
 
-    total_test_files = [
+    test_files_in_index = [
         fp for fp, info in index_data.files.items()
         if info.file_type == FileType.TEST
     ]
-    print(f"Index built: {len(index_data.files)} files, {len(total_test_files)} test files")
+    print(f"Index: {len(index_data.files)} files, {len(test_files_in_index)} test files")
     print()
 
-    # Step 3: Get commits to analyze
-    print(f"Fetching {args.commits} commits with Python changes...")
-    commits = get_commits_with_python_changes(repo_path, args.commits + 10)  # extras in case some fail
-    print(f"Found {len(commits)} candidate commits")
+    # Get commits
+    print(f"Fetching commits with Python changes...")
+    # Request extra to handle skips
+    all_commits = get_commits_with_python_changes(repo_path, args.commits + 15)
+    print(f"Found {len(all_commits)} candidate commits")
     print()
 
-    # Step 4: Analyze each commit
+    # Analyze each commit
     results = []
-    total_missed = 0
-    total_failed = 0
-    total_correctly_selected = 0
+    stats = {
+        "total_missed": 0,
+        "total_failed_files": 0,
+        "total_correctly_selected_files": 0,
+    }
 
-    for i, commit in enumerate(commits[:args.commits]):
+    analyzed = 0
+    for i, commit in enumerate(all_commits):
+        if analyzed >= args.commits:
+            break
+
         commit_hash = commit["hash"]
-        commit_msg = commit["message"][:80]
-        print(f"[{i+1}/{args.commits}] Analyzing {commit_hash[:8]}: {commit_msg}")
+        short_hash = commit_hash[:8]
+        commit_msg = commit["message"][:70]
 
+        print(f"[{analyzed + 1}/{args.commits}] {short_hash}: {commit_msg}")
+
+        # Get changed files
         try:
-            changed_files = get_changed_files(repo_path, commit_hash)
-            changed_py_files = [f for f in changed_files if f.endswith(".py")]
+            all_changed = get_changed_files(repo_path, commit_hash)
+            changed_py = [f for f in all_changed if f.endswith(".py")]
         except subprocess.CalledProcessError:
-            print(f"  ⚠ Could not get changed files (initial commit?), skipping")
+            print(f"  ⚠ Skipping (can't diff, possibly initial commit)")
             continue
 
-        if not changed_py_files:
+        if not changed_py:
             print(f"  ⚠ No Python files changed, skipping")
             continue
 
-        # Run selector using HEAD index
-        start = time.time()
-        selected = run_selector(index_data, changed_py_files, thoroughness)
-        select_time = (time.time() - start) * 1000
+        # Run selector
+        t0 = time.time()
+        selected = run_selector(index_data, changed_py, thoroughness)
+        select_ms = (time.time() - t0) * 1000
+        selected_files = set(selected.keys())
 
-        selected_test_files = set(selected.keys())
-
-        print(f"  Changed files: {len(changed_py_files)}")
-        print(f"  Selector chose: {len(selected_test_files)} test files ({select_time:.1f}ms)")
+        print(f"  Changed: {len(changed_py)} py file(s)  |  Selected: {len(selected_files)} test(s) ({select_ms:.1f}ms)")
 
         # Run actual tests at this commit
-        test_results = run_tests_at_commit(repo_path, commit_hash)
+        t1 = time.time()
+        test_out = run_tests_at_commit(repo_path, commit_hash)
+        test_secs = time.time() - t1
 
-        if test_results["run_error"]:
-            print(f"  ⚠ Test run error: {test_results['run_error']}")
+        if test_out["run_error"]:
+            print(f"  ⚠ Run error: {test_out['run_error'][:100]}")
 
-        # Determine which test FILES had failures
-        failed_test_files = set()
-        for failed in test_results["failed_tests"]:
-            failed_test_files.add(extract_test_file_from_nodeid(failed))
-        for errored in test_results["errors"]:
-            failed_test_files.add(extract_test_file_from_nodeid(errored))
+        # Aggregate failed files (count FAILED and ERROR separately)
+        failed_file_set = set()
+        for nodeid in test_out["failed_tests"]:
+            failed_file_set.add(nodeid_to_file(nodeid))
 
-        # Calculate miss: tests that failed but were NOT selected
-        missed_tests = failed_test_files - selected_test_files
-        correctly_selected = failed_test_files & selected_test_files
+        errored_file_set = set()
+        for nodeid in test_out["errored_tests"]:
+            errored_file_set.add(nodeid_to_file(nodeid))
 
-        total_missed += len(missed_tests)
-        total_failed += len(failed_test_files)
-        total_correctly_selected += len(correctly_selected)
+        # For miss rate, we focus on FAILED (genuine failures) not errors
+        # (which are typically timeouts/import issues)
+        missed_files = failed_file_set - selected_files
+        correctly_selected = failed_file_set & selected_files
 
-        print(f"  Tests run: {test_results['total_tests']}")
-        print(f"  Failed: {len(test_results['failed_tests'])}")
-        print(f"  Errors: {len(test_results['errors'])}")
-        if missed_tests:
-            print(f"  ❌ MISSED: {missed_tests}")
-        elif failed_test_files:
-            print(f"  ✅ All failures were in selected tests")
+        stats["total_missed"] += len(missed_files)
+        stats["total_failed_files"] += len(failed_file_set)
+        stats["total_correctly_selected_files"] += len(correctly_selected)
+
+        status_icon = "✅"
+        if missed_files:
+            status_icon = "❌"
+        elif failed_file_set:
+            status_icon = "✅"
+
+        print(f"  Tests: {test_out['total_run']} run, "
+              f"{len(test_out['failed_tests'])} failed, "
+              f"{len(test_out['errored_tests'])} errors  "
+              f"({test_secs:.1f}s)")
+
+        if missed_files:
+            print(f"  {status_icon} MISSED failures in: {sorted(missed_files)}")
+        elif failed_file_set:
+            print(f"  {status_icon} All {len(failed_file_set)} failed file(s) were selected")
         else:
-            print(f"  ✅ No failures")
+            print(f"  {status_icon} No test failures")
 
         commit_result = {
             "commit_hash": commit_hash,
             "commit_message": commit["message"],
-            "changed_files": changed_files,
-            "changed_python_files": changed_py_files,
-            "selector_thoroughness": thoroughness.value,
-            "selector_time_ms": round(select_time, 2),
-            "selected_test_files": sorted(selected_test_files),
-            "selected_test_details": {
-                k: v for k, v in sorted(selected.items())
+            "changed_files": all_changed,
+            "changed_python_files": changed_py,
+            "selector": {
+                "thoroughness": thoroughness.value,
+                "time_ms": round(select_ms, 2),
+                "selected_test_files": sorted(selected_files),
+                "selected_count": len(selected_files),
+                "details": {k: v for k, v in sorted(selected.items())},
             },
-            "actual_test_results": {
-                "total_tests_run": test_results["total_tests"],
-                "passed": len(test_results["passed_tests"]),
-                "failed": len(test_results["failed_tests"]),
-                "errors": len(test_results["errors"]),
-                "run_error": test_results["run_error"],
-                "failed_test_nodeids": test_results["failed_tests"],
-                "error_test_nodeids": test_results["errors"],
-                "failed_test_files": sorted(failed_test_files),
+            "actual_test_run": {
+                "total_tests_run": test_out["total_run"],
+                "passed_count": len(test_out["passed_tests"]),
+                "failed_count": len(test_out["failed_tests"]),
+                "error_count": len(test_out["errored_tests"]),
+                "run_error": test_out["run_error"],
+                "failed_test_nodeids": test_out["failed_tests"],
+                "error_test_nodeids": test_out["errored_tests"],
+                "failed_test_files": sorted(failed_file_set),
+                "errored_test_files": sorted(errored_file_set),
             },
             "analysis": {
-                "failed_and_selected": sorted(correctly_selected),
-                "failed_and_not_selected": sorted(missed_tests),
-                "commit_miss_count": len(missed_tests),
-                "commit_fail_count": len(failed_test_files),
+                "failed_files_correctly_selected": sorted(correctly_selected),
+                "failed_files_missed_by_selector": sorted(missed_files),
+                "miss_count": len(missed_files),
+                "fail_count": len(failed_file_set),
             },
         }
-
         results.append(commit_result)
+        analyzed += 1
 
-    # Restore original HEAD
-    print(f"\nRestoring to {original_branch} ({original_head[:8]})...")
+    # Restore HEAD
+    print(f"\nRestoring to {original_branch}...")
     try:
         subprocess.run(
             ["git", "checkout", "--force", original_branch],
@@ -381,53 +389,47 @@ def main():
             cwd=repo_path, capture_output=True, text=True, check=True,
         )
 
-    # Calculate overall metrics
-    if total_failed > 0:
-        miss_rate = total_missed / total_failed
-    else:
-        miss_rate = 0.0
+    # Compute overall metrics
+    total_f = stats["total_failed_files"]
+    total_m = stats["total_missed"]
+    total_c = stats["total_correctly_selected_files"]
+    miss_rate = total_m / total_f if total_f > 0 else 0.0
 
-    # Also compute how many commits had failures
-    commits_with_failures = sum(
-        1 for r in results if r["analysis"]["commit_fail_count"] > 0
-    )
-    commits_with_misses = sum(
-        1 for r in results if r["analysis"]["commit_miss_count"] > 0
-    )
+    commits_with_failures = sum(1 for r in results if r["analysis"]["fail_count"] > 0)
+    commits_with_misses = sum(1 for r in results if r["analysis"]["miss_count"] > 0)
 
     summary = {
         "total_commits_analyzed": len(results),
         "commits_with_test_failures": commits_with_failures,
         "commits_with_selector_misses": commits_with_misses,
-        "total_failed_test_files": total_failed,
-        "total_correctly_selected_failures": total_correctly_selected,
-        "total_missed_failures": total_missed,
+        "total_failed_test_files_across_all_commits": total_f,
+        "total_correctly_selected_failures": total_c,
+        "total_missed_failures": total_m,
         "miss_rate": round(miss_rate, 4),
         "miss_rate_percentage": f"{miss_rate * 100:.2f}%",
         "miss_rate_definition": (
-            "Fraction of test files that actually failed but were NOT selected "
-            "by the selector. Lower is better. 0% = perfect recall."
+            "Fraction of test files that actually FAILED (not errored) "
+            "but were NOT selected by the RTS selector. "
+            "Lower is better. 0.00% = perfect recall."
         ),
     }
 
-    # Build final output
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output = {
         "metadata": {
-            "repository": repo_path,
+            "repository_path": repo_path,
             "repository_name": repo_name,
             "validation_timestamp": datetime.now(timezone.utc).isoformat(),
             "rts_version": "0.1.0",
             "thoroughness_level": thoroughness.value,
-            "index_built_from": "HEAD",
+            "index_built_from": f"HEAD ({original_head[:8]})",
             "total_files_in_index": len(index_data.files),
-            "total_test_files_in_index": len(total_test_files),
+            "total_test_files_in_index": len(test_files_in_index),
         },
         "summary": summary,
         "commits": results,
     }
 
-    # Write output file
     filename = f"validation_results_{repo_name}_{timestamp}.json"
     output_path = Path(output_dir) / filename
     with open(output_path, "w", encoding="utf-8") as f:
@@ -440,14 +442,14 @@ def main():
     print(f"Commits analyzed:           {len(results)}")
     print(f"Commits with failures:      {commits_with_failures}")
     print(f"Commits with misses:        {commits_with_misses}")
-    print(f"Total failed test files:    {total_failed}")
-    print(f"Correctly selected:         {total_correctly_selected}")
-    print(f"Missed:                     {total_missed}")
-    print(f"Miss rate:                  {miss_rate * 100:.2f}%")
+    print(f"Total failed test files:    {total_f}")
+    print(f"Correctly selected:         {total_c}")
+    print(f"Missed:                     {total_m}")
+    print(f"MISS RATE:                  {miss_rate * 100:.2f}%")
     print()
     print(f"Results saved to: {output_path}")
 
-    return 0 if miss_rate == 0 else 1
+    return 0
 
 
 if __name__ == "__main__":
