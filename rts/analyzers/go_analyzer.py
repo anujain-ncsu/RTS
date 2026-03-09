@@ -65,14 +65,18 @@ class GoAnalyzer(LanguageAnalyzer):
         
         resolved_files = set()
         
+        # Go implicit same-package dependency: all .go files in the same directory
+        # are part of the same package and implicitly depend on each other.
+        current_dir = str(Path(parse_result.file_path).parent)
+        for f in all_files_in_lang:
+            if f != parse_result.file_path and str(Path(f).parent) == current_dir:
+                resolved_files.add(f)
+        
         for imp in parse_result.imports:
             # Only intra-repo packages matter. We'll simply check if the import path matches any suffix
             # of the directories in all_files_in_lang.
             # e.g. imp = 'github.com/my/repo/internal/handler' => `internal/handler/handler.go`
             # For simplicity, if the directory `internal/handler` exists in our repo, it's a match.
-            
-            # Extract just the likely sub-path. 
-            # A very simplistic map: find any file whose purely relative path's parent matches the import path tail.
             
             imp_parts = imp.split('/')
             

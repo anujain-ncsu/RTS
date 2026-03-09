@@ -47,6 +47,35 @@ logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
+import shutil
+
+def _find_go_binary() -> str:
+    """Find the Go binary, searching common install paths."""
+    # Try PATH first
+    go_path = shutil.which("go")
+    if go_path:
+        return go_path
+    
+    # Common locations on macOS / Linux
+    candidates = [
+        "/usr/local/go/bin/go",
+        "/opt/homebrew/bin/go",
+        "/opt/homebrew/Cellar/go/*/bin/go",  # Homebrew cellar
+        "/usr/local/bin/go",
+        os.path.expanduser("~/go/bin/go"),
+        os.path.expanduser("~/sdk/go/bin/go"),
+    ]
+    
+    import glob
+    for pattern in candidates:
+        matches = glob.glob(pattern)
+        for match in matches:
+            if os.path.isfile(match) and os.access(match, os.X_OK):
+                return match
+    
+    # Fall back to bare "go" and let the caller handle the error
+    return "go"
+
 def get_commits_with_changes(repo_path: str, count: int, file_ext: str) -> list[dict]:
     """Get recent non-merge commits that modified source or test files."""
     result = subprocess.run(
@@ -106,10 +135,11 @@ def run_tests_at_commit(repo_path: str, commit_hash: str, language: str) -> dict
     run_error = None
 
     if language == "go":
+        go_bin = _find_go_binary()
         try:
             # We must use go test -json ./...
             result = subprocess.run(
-                ["go", "test", "-json", "./...", "-timeout=15s"],
+                [go_bin, "test", "-json", "./...", "-timeout=15s"],
                 cwd=repo_path,
                 capture_output=True, text=True,
                 timeout=600,
