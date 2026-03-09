@@ -53,7 +53,14 @@ def cli(verbose: bool) -> None:
     default=None,
     help="Override the output directory for the index (default: <repo>/.rts/).",
 )
-def index(repo: str, output_dir: str | None) -> None:
+@click.option(
+    "--force",
+    "-f",
+    is_flag=True,
+    default=False,
+    help="Force a clean rebuild of the index.",
+)
+def index(repo: str, output_dir: str | None, force: bool) -> None:
     """Build the dependency index for a Python repository.
 
     REPO is the path to the repository to analyze.
@@ -61,11 +68,22 @@ def index(repo: str, output_dir: str | None) -> None:
     repo_path = Path(repo)
     click.echo(f"Indexing repository: {repo_path}")
 
+    output_path = Path(output_dir) if output_dir else None
+    store = IndexStore(repo_path, index_dir=output_path)
+
+    old_index = None
+    if not force:
+        try:
+            old_index = store.load()
+            click.echo("Found existing index, performing incremental rebuild...")
+        except FileNotFoundError:
+            click.echo("No existing index found, performing full build...")
+
     start = time.time()
 
     # Build the index
     builder = GraphBuilder(repo_path)
-    index_data = builder.build_index()
+    index_data = builder.build_index(old_index=old_index)
 
     # Count stats
     num_files = len(index_data.files)
@@ -78,8 +96,6 @@ def index(repo: str, output_dir: str | None) -> None:
     num_mappings = sum(len(v) for v in index_data.source_to_tests.values())
 
     # Save the index
-    output_path = Path(output_dir) if output_dir else None
-    store = IndexStore(repo_path, index_dir=output_path)
     saved_path = store.save(index_data)
 
     elapsed = time.time() - start

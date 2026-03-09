@@ -44,12 +44,16 @@ class FileInfo:
     imported_by: list[str] = dataclasses.field(default_factory=list)
     symbols: list[str] = dataclasses.field(default_factory=list)
     test_functions: list[str] = dataclasses.field(default_factory=list)
+    mtime: float = 0.0
+    size: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         d: dict[str, Any] = {
             "type": self.file_type.value,
             "imports": self.imports,
             "symbols": self.symbols,
+            "mtime": self.mtime,
+            "size": self.size,
         }
         if self.imported_by:
             d["imported_by"] = self.imported_by
@@ -66,6 +70,8 @@ class FileInfo:
             imported_by=data.get("imported_by", []),
             symbols=data.get("symbols", []),
             test_functions=data.get("test_functions", []),
+            mtime=data.get("mtime", 0.0),
+            size=data.get("size", 0),
         )
 
 

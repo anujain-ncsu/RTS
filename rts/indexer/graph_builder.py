@@ -8,6 +8,7 @@ both forward (what does this file depend on?) and reverse
 from __future__ import annotations
 
 import logging
+import os
 from collections import defaultdict, deque
 from pathlib import Path
 
@@ -29,8 +30,11 @@ class GraphBuilder:
         self.regex_parser = RegexParser()
         self.test_classifier = TestClassifier()
 
-    def build_index(self) -> IndexData:
+    def build_index(self, old_index: IndexData | None = None) -> IndexData:
         """Build the complete index for the repository.
+
+        Args:
+            old_index: Optional existing index to use for incremental updates.
 
         Returns:
             IndexData containing file information, dependency graph,
@@ -40,16 +44,48 @@ class GraphBuilder:
         python_files = self._discover_files()
         logger.info("Discovered %d Python files", len(python_files))
 
-        # Step 2 & 3: Parse all files (AST primary, regex fallback)
-        parse_results = self._parse_all_files(python_files)
+        # Check existing files to bypass parsing
+        python_file_set = set(python_files)
+        reused_files: dict[str, FileInfo] = {}
+        files_to_parse: list[str] = []
+        file_stats: dict[str, tuple[float, int]] = {}
+
+        for rel_path in python_files:
+            full_path = self.repo_root / rel_path
+            try:
+                stat = full_path.stat()
+                mtime = stat.st_mtime
+                size = stat.st_size
+                file_stats[rel_path] = (mtime, size)
+            except OSError:
+                mtime = 0.0
+                size = 0
+                file_stats[rel_path] = (mtime, size)
+
+            if old_index and rel_path in old_index.files:
+                old_info = old_index.files[rel_path]
+                if old_info.mtime == mtime and old_info.size == size:
+                    reused_files[rel_path] = old_info
+                    continue
+
+            files_to_parse.append(rel_path)
+
+        logger.info(
+            "Incremental: %d files unchanged, %d files to parse",
+            len(reused_files),
+            len(files_to_parse),
+        )
+
+        # Step 2 & 3: Parse modified/added files (AST primary, regex fallback)
+        parse_results = self._parse_all_files(files_to_parse)
         logger.info("Parsed %d files successfully", len(parse_results))
 
-        # Step 4: Set up import resolver
+        # Step 4: Set up import resolver (only needed for newly parsed files)
         resolver = ImportResolver(self.repo_root, python_files)
 
         # Step 5: Build file info and dependency graph
         files, forward_graph = self._build_file_graph(
-            python_files, parse_results, resolver
+            python_files, python_file_set, parse_results, resolver, reused_files, file_stats
         )
 
         # Step 6: Build reverse graph (imported_by)
@@ -61,11 +97,12 @@ class GraphBuilder:
                 files[file_path].imported_by = sorted(importers)
 
         # Step 7: Classify files and build test mappings
-        test_funcs = {
-            fp: pr.test_functions
-            for fp, pr in parse_results.items()
-            if pr.test_functions
-        }
+        test_funcs = {}
+        for fp in python_files:
+            if fp in parse_results and parse_results[fp].test_functions:
+                test_funcs[fp] = parse_results[fp].test_functions
+            elif fp in reused_files and reused_files[fp].test_functions:
+                test_funcs[fp] = reused_files[fp].test_functions
         classifications = self.test_classifier.classify_files(python_files, test_funcs)
 
         # Update file types
@@ -156,42 +193,66 @@ class GraphBuilder:
     def _build_file_graph(
         self,
         python_files: list[str],
+        python_file_set: set[str],
         parse_results: dict[str, ParseResult],
         resolver: ImportResolver,
+        reused_files: dict[str, FileInfo],
+        file_stats: dict[str, tuple[float, int]],
     ) -> tuple[dict[str, FileInfo], dict[str, set[str]]]:
         """Build FileInfo entries and forward dependency graph."""
         files: dict[str, FileInfo] = {}
         forward_graph: dict[str, set[str]] = defaultdict(set)
 
         for rel_path in python_files:
-            result = parse_results.get(rel_path)
-            if not result:
-                continue
+            mtime, size = file_stats.get(rel_path, (0.0, 0))
 
-            # Resolve imports to file paths
-            resolved_imports: list[str] = []
-            for imp in result.imports:
-                targets = resolver.resolve(imp, rel_path)
-                for target in targets:
-                    if target != rel_path:  # Skip self-imports
-                        resolved_imports.append(target)
-                        forward_graph[rel_path].add(target)
+            if rel_path in reused_files:
+                info = reused_files[rel_path]
+                # Filter imports to exclude deleted files
+                valid_imports = [imp for imp in info.imports if imp in python_file_set]
 
-            # Deduplicate while preserving order
-            seen: set[str] = set()
-            unique_imports: list[str] = []
-            for imp_path in resolved_imports:
-                if imp_path not in seen:
-                    seen.add(imp_path)
-                    unique_imports.append(imp_path)
+                files[rel_path] = FileInfo(
+                    path=info.path,
+                    file_type=info.file_type,
+                    imports=valid_imports,
+                    symbols=info.symbols,
+                    test_functions=info.test_functions,
+                    mtime=info.mtime,
+                    size=info.size,
+                )
+                for imp in valid_imports:
+                    forward_graph[rel_path].add(imp)
+            else:
+                result = parse_results.get(rel_path)
+                if not result:
+                    continue
 
-            files[rel_path] = FileInfo(
-                path=rel_path,
-                file_type=FileType.SOURCE,  # Will be updated later
-                imports=unique_imports,
-                symbols=result.symbols,
-                test_functions=result.test_functions,
-            )
+                # Resolve imports to file paths
+                resolved_imports: list[str] = []
+                for imp in result.imports:
+                    targets = resolver.resolve(imp, rel_path)
+                    for target in targets:
+                        if target != rel_path:  # Skip self-imports
+                            resolved_imports.append(target)
+                            forward_graph[rel_path].add(target)
+
+                # Deduplicate while preserving order
+                seen: set[str] = set()
+                unique_imports: list[str] = []
+                for imp_path in resolved_imports:
+                    if imp_path not in seen:
+                        seen.add(imp_path)
+                        unique_imports.append(imp_path)
+
+                files[rel_path] = FileInfo(
+                    path=rel_path,
+                    file_type=FileType.SOURCE,  # Will be updated later
+                    imports=unique_imports,
+                    symbols=result.symbols,
+                    test_functions=result.test_functions,
+                    mtime=mtime,
+                    size=size,
+                )
 
         return files, forward_graph
 
