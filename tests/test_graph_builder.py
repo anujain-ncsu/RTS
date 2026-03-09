@@ -101,7 +101,7 @@ class TestGraphBuilder:
         builder = GraphBuilder(sample_repo)
         index = builder.build_index()
 
-        assert index.version == "1.0"
+        assert index.version == "1.1"
         assert str(sample_repo) in index.repository
         assert index.created_at  # Should be non-empty
 

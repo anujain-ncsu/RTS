@@ -57,7 +57,7 @@ class TestIndexCommand:
         assert index_path.exists()
 
         data = json.loads(index_path.read_text())
-        assert data["version"] == "1.0"
+        assert data["version"] == "1.1"
         assert "files" in data
 
     def test_index_reports_stats(self, runner, sample_repo):

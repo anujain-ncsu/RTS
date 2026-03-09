@@ -202,6 +202,70 @@ def nodeid_to_file(nodeid: str) -> str:
     return nodeid.split("::")[0]
 
 
+# Commit message patterns that indicate trivial (non-business-logic) changes
+_TRIVIAL_MSG_PATTERNS = [
+    # Linting / formatting
+    r"(?i)\b(lint|delint|flake8|ruff|black|isort|autopep|pep8|pyflakes|pylint)\b",
+    r"(?i)^\s*(style|formatting|format|reformat)",
+    r"(?i)\bcode\s*style\b",
+    # Pre-commit / CI bots
+    r"(?i)\[pre-commit",
+    r"(?i)pre-commit\s+(auto|hook)",
+    r"(?i)\[ci\s+skip\]",
+    # Typo / comment / docstring only
+    r"(?i)^\s*(fix|correct)\s+(typo|spelling|whitespace|comment)",
+    r"(?i)^\s*typo",
+    r"(?i)^\s*(update|fix)\s+docstring",
+    r"(?i)^\s*fix\s+docstring\s+typo",
+    # Version bumps
+    r"(?i)^\s*(bump|release)\s+(version|v?\d)",
+    # Changelog-only
+    r"(?i)^\s*(update|add)\s+changelog",
+    # Merge commits that slipped through
+    r"(?i)^\s*merge\s+(branch|pull|pr|request)",
+]
+_TRIVIAL_MSG_RE = [__import__("re").compile(p) for p in _TRIVIAL_MSG_PATTERNS]
+
+
+def _diff_is_whitespace_only(repo_path: str, commit_hash: str) -> bool:
+    """Return True if the commit's Python diffs are purely whitespace/comment changes."""
+    try:
+        result = subprocess.run(
+            ["git", "diff", "-U0", "--ignore-all-space",
+             f"{commit_hash}~1..{commit_hash}", "--", "*.py"],
+            cwd=repo_path, capture_output=True, text=True, check=True,
+        )
+    except subprocess.CalledProcessError:
+        return False  # can't tell, assume non-trivial
+
+    # If ignoring whitespace produces no diff lines, it's whitespace-only
+    for line in result.stdout.split("\n"):
+        if line.startswith("+") and not line.startswith("+++"):
+            content = line[1:].strip()
+            # Skip blank lines and comment-only lines
+            if content and not content.startswith("#"):
+                return False
+        elif line.startswith("-") and not line.startswith("---"):
+            content = line[1:].strip()
+            if content and not content.startswith("#"):
+                return False
+    return True
+
+
+def is_trivial_commit(repo_path: str, commit_hash: str, commit_msg: str) -> bool:
+    """Return True if a commit is non-substantial (linting, formatting, comments, etc.)."""
+    # 1. Check commit message against known trivial patterns
+    for regex in _TRIVIAL_MSG_RE:
+        if regex.search(commit_msg):
+            return True
+
+    # 2. Check if the actual diff is whitespace/comment-only
+    if _diff_is_whitespace_only(repo_path, commit_hash):
+        return True
+
+    return False
+
+
 def main():
     import argparse
 
@@ -210,6 +274,8 @@ def main():
     parser.add_argument("--commits", type=int, default=30, help="Number of commits")
     parser.add_argument("--thoroughness", default="standard")
     parser.add_argument("--output-dir", default=None)
+    parser.add_argument("--skip-trivial", action="store_true",
+                        help="Skip non-substantial commits (linting, formatting, typos, etc.)")
     args = parser.parse_args()
 
     repo_path = args.repo
@@ -224,6 +290,7 @@ def main():
     print(f"Repository:   {repo_path}")
     print(f"Thoroughness: {thoroughness.value}")
     print(f"Commits:      {args.commits}")
+    print(f"Skip trivial: {args.skip_trivial}")
     print()
 
     # Save original HEAD
@@ -255,10 +322,13 @@ def main():
 
     # Get commits
     print(f"Fetching commits with Python changes...")
-    # Request extra to handle skips
-    all_commits = get_commits_with_python_changes(repo_path, args.commits + 15)
+    # Request extra to handle skips (more if filtering trivial commits)
+    fetch_count = args.commits * 3 if args.skip_trivial else args.commits + 15
+    all_commits = get_commits_with_python_changes(repo_path, fetch_count)
     print(f"Found {len(all_commits)} candidate commits")
     print()
+
+    trivial_skipped = 0
 
     # Analyze each commit
     results = []
@@ -289,6 +359,12 @@ def main():
 
         if not changed_py:
             print(f"  ⚠ No Python files changed, skipping")
+            continue
+
+        # Skip trivial commits if requested
+        if args.skip_trivial and is_trivial_commit(repo_path, commit_hash, commit["message"]):
+            print(f"  ⚠ Trivial commit (linting/formatting/comments), skipping")
+            trivial_skipped += 1
             continue
 
         # Run selector

@@ -40,6 +40,7 @@ class FileInfo:
 
     path: str
     file_type: FileType
+    language: str = "python"
     imports: list[str] = dataclasses.field(default_factory=list)
     imported_by: list[str] = dataclasses.field(default_factory=list)
     symbols: list[str] = dataclasses.field(default_factory=list)
@@ -50,6 +51,7 @@ class FileInfo:
     def to_dict(self) -> dict[str, Any]:
         d: dict[str, Any] = {
             "type": self.file_type.value,
+            "language": self.language,
             "imports": self.imports,
             "symbols": self.symbols,
             "mtime": self.mtime,
@@ -66,6 +68,7 @@ class FileInfo:
         return cls(
             path=path,
             file_type=FileType(data["type"]),
+            language=data.get("language", "python"),
             imports=data.get("imports", []),
             imported_by=data.get("imported_by", []),
             symbols=data.get("symbols", []),
@@ -106,6 +109,7 @@ class IndexData:
     version: str = "1.0"
     repository: str = ""
     created_at: str = ""
+    languages: list[str] = dataclasses.field(default_factory=lambda: ["python"])
     files: dict[str, FileInfo] = dataclasses.field(default_factory=dict)
     source_to_tests: dict[str, list[TestMapping]] = dataclasses.field(
         default_factory=dict
@@ -117,6 +121,7 @@ class IndexData:
             "version": self.version,
             "repository": self.repository,
             "created_at": self.created_at,
+            "languages": self.languages,
             "files": {
                 path: info.to_dict() for path, info in self.files.items()
             },
@@ -141,6 +146,7 @@ class IndexData:
             version=data.get("version", "1.0"),
             repository=data.get("repository", ""),
             created_at=data.get("created_at", ""),
+            languages=data.get("languages", ["python"]),
             files=files,
             source_to_tests=source_to_tests,
             test_to_sources=data.get("test_to_sources", {}),

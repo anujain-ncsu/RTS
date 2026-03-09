@@ -1,4 +1,4 @@
-"""Builds a dependency graph from parsed Python files.
+"""Builds a dependency graph from parsed source files across multiple languages.
 
 The graph captures which files import which other files, enabling
 both forward (what does this file depend on?) and reverse
@@ -10,12 +10,12 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict, deque
+from datetime import datetime, timezone
 from pathlib import Path
 
-from rts.indexer.ast_parser import ASTParser, ImportInfo, ParseResult
-from rts.indexer.import_resolver import ImportResolver
-from rts.indexer.regex_parser import RegexParser
-from rts.indexer.test_classifier import TestClassifier
+import rts.analyzers  # Ensures analyzers are registered
+from rts.analyzers.registry import get_registry
+from rts.analyzers.base import ParseResult
 from rts.models import FileInfo, FileType, IndexData, Relationship, TestMapping
 
 logger = logging.getLogger(__name__)
@@ -26,9 +26,7 @@ class GraphBuilder:
 
     def __init__(self, repo_root: Path) -> None:
         self.repo_root = repo_root
-        self.ast_parser = ASTParser()
-        self.regex_parser = RegexParser()
-        self.test_classifier = TestClassifier()
+        self.registry = get_registry()
 
     def build_index(self, old_index: IndexData | None = None) -> IndexData:
         """Build the complete index for the repository.
@@ -40,17 +38,17 @@ class GraphBuilder:
             IndexData containing file information, dependency graph,
             and source-to-test mappings.
         """
-        # Step 1: Discover Python files
-        python_files = self._discover_files()
-        logger.info("Discovered %d Python files", len(python_files))
+        # Step 1: Discover files
+        all_files = self._discover_files()
+        logger.info("Discovered %d source files", len(all_files))
 
         # Check existing files to bypass parsing
-        python_file_set = set(python_files)
+        file_set = set(all_files)
         reused_files: dict[str, FileInfo] = {}
         files_to_parse: list[str] = []
         file_stats: dict[str, tuple[float, int]] = {}
 
-        for rel_path in python_files:
+        for rel_path in all_files:
             full_path = self.repo_root / rel_path
             try:
                 stat = full_path.stat()
@@ -76,16 +74,20 @@ class GraphBuilder:
             len(files_to_parse),
         )
 
-        # Step 2 & 3: Parse modified/added files (AST primary, regex fallback)
+        # Step 2 & 3: Parse modified/added files (delegated to analyzers)
         parse_results = self._parse_all_files(files_to_parse)
         logger.info("Parsed %d files successfully", len(parse_results))
 
-        # Step 4: Set up import resolver (only needed for newly parsed files)
-        resolver = ImportResolver(self.repo_root, python_files)
+        # Group all files by language for context in resolutions
+        files_by_lang: dict[str, list[str]] = defaultdict(list)
+        for rel_path in all_files:
+            analyzer = self.registry.get_analyzer_for_file(Path(rel_path))
+            if analyzer:
+                files_by_lang[analyzer.language_name].append(rel_path)
 
-        # Step 5: Build file info and dependency graph
+        # Step 4, 5: Resolve imports and build file info & dependency graph
         files, forward_graph = self._build_file_graph(
-            python_files, python_file_set, parse_results, resolver, reused_files, file_stats
+            all_files, file_set, parse_results, files_by_lang, reused_files, file_stats
         )
 
         # Step 6: Build reverse graph (imported_by)
@@ -96,19 +98,16 @@ class GraphBuilder:
             if file_path in files:
                 files[file_path].imported_by = sorted(importers)
 
-        # Step 7: Classify files and build test mappings
-        test_funcs = {}
-        for fp in python_files:
-            if fp in parse_results and parse_results[fp].test_functions:
-                test_funcs[fp] = parse_results[fp].test_functions
-            elif fp in reused_files and reused_files[fp].test_functions:
-                test_funcs[fp] = reused_files[fp].test_functions
-        classifications = self.test_classifier.classify_files(python_files, test_funcs)
-
-        # Update file types
-        for fp, is_test in classifications.items():
-            if fp in files:
-                files[fp].file_type = FileType.TEST if is_test else FileType.SOURCE
+        # Step 7: Classify files
+        for fp, info in files.items():
+            if fp in reused_files:
+                continue # Classification doesn't change if file didn't change (assuming isolated tests)
+            
+            analyzer = self.registry.get_analyzer_for_file(Path(fp))
+            if analyzer:
+                test_funcs = parse_results[fp].test_functions if fp in parse_results else info.test_functions
+                is_test = analyzer.is_test_file(fp, test_funcs)
+                info.file_type = FileType.TEST if is_test else FileType.SOURCE
 
         # Step 8: Build source-to-test and test-to-source mappings
         source_to_tests, test_to_sources = self._build_test_mappings(
@@ -116,16 +115,15 @@ class GraphBuilder:
         )
 
         # Step 9: Add naming convention heuristic mappings
-        self._enrich_with_naming_heuristics(
-            files, source_to_tests, test_to_sources
-        )
+        self._enrich_with_naming_heuristics(files, source_to_tests, test_to_sources)
 
-        from datetime import datetime, timezone
+        languages = list({analyzer.language_name for analyzer in self.registry.get_all_analyzers()})
 
         index = IndexData(
-            version="1.0",
+            version="1.1",
             repository=str(self.repo_root),
             created_at=datetime.now(timezone.utc).isoformat(),
+            languages=languages,
             files=files,
             source_to_tests=source_to_tests,
             test_to_sources=test_to_sources,
@@ -140,62 +138,50 @@ class GraphBuilder:
         return index
 
     def _discover_files(self) -> list[str]:
-        """Find all Python files in the repository."""
-        python_files: list[str] = []
+        """Find all relevant files in the repository based on registered extensions."""
+        all_files: list[str] = []
+        extensions = self.registry.get_all_extensions()
 
-        for py_file in self.repo_root.rglob("*.py"):
+        for file_path in self.repo_root.rglob("*"):
+            if not file_path.is_file():
+                continue
+            if file_path.suffix.lower() not in extensions:
+                continue
+
             # Skip hidden directories and common non-source dirs
-            parts = py_file.relative_to(self.repo_root).parts
+            parts = file_path.relative_to(self.repo_root).parts
             if any(
-                part.startswith(".") or part in {"__pycache__", "node_modules", ".git", "venv", ".venv", "env", ".env", ".tox", ".nox", "build", "dist", ".eggs"}
+                part.startswith(".") or part in {"__pycache__", "node_modules", ".git", "venv", ".venv", "env", ".env", ".tox", ".nox", "build", "dist", ".eggs", "target"}
                 for part in parts
             ):
                 continue
-            rel_path = str(py_file.relative_to(self.repo_root))
-            python_files.append(rel_path)
+            
+            rel_path = str(file_path.relative_to(self.repo_root))
+            all_files.append(rel_path)
 
-        return sorted(python_files)
+        return sorted(all_files)
 
-    def _parse_all_files(
-        self, python_files: list[str]
-    ) -> dict[str, ParseResult]:
-        """Parse all Python files, using AST first and regex as fallback."""
+    def _parse_all_files(self, files_to_parse: list[str]) -> dict[str, ParseResult]:
+        """Parse all files by delegating to their respective analyzers."""
         results: dict[str, ParseResult] = {}
 
-        for rel_path in python_files:
+        for rel_path in files_to_parse:
             full_path = self.repo_root / rel_path
-            result = self.ast_parser.parse_file(full_path)
+            analyzer = self.registry.get_analyzer_for_file(full_path)
+            if not analyzer:
+                continue
 
-            if result.parse_error:
-                # Fallback to regex parser
-                logger.debug("Falling back to regex parser for %s", rel_path)
-                regex_result = self.regex_parser.parse_file(full_path)
-
-                # Convert regex result back into a ParseResult
-                from rts.indexer.ast_parser import ImportInfo as ASTImportInfo
-
-                result = ParseResult(file_path=rel_path)
-                result.imports = [
-                    ASTImportInfo(
-                        module=ri.module,
-                        names=ri.names,
-                        is_relative=ri.is_relative,
-                        level=ri.level,
-                    )
-                    for ri in regex_result.imports
-                ]
-                result.test_functions = regex_result.test_functions
-
+            result = analyzer.parse_file(full_path, rel_path)
             results[rel_path] = result
 
         return results
 
     def _build_file_graph(
         self,
-        python_files: list[str],
-        python_file_set: set[str],
+        all_files: list[str],
+        file_set: set[str],
         parse_results: dict[str, ParseResult],
-        resolver: ImportResolver,
+        files_by_lang: dict[str, list[str]],
         reused_files: dict[str, FileInfo],
         file_stats: dict[str, tuple[float, int]],
     ) -> tuple[dict[str, FileInfo], dict[str, set[str]]]:
@@ -203,17 +189,23 @@ class GraphBuilder:
         files: dict[str, FileInfo] = {}
         forward_graph: dict[str, set[str]] = defaultdict(set)
 
-        for rel_path in python_files:
+        for rel_path in all_files:
             mtime, size = file_stats.get(rel_path, (0.0, 0))
+            analyzer = self.registry.get_analyzer_for_file(Path(rel_path))
+            if not analyzer:
+                continue
+
+            language = analyzer.language_name
 
             if rel_path in reused_files:
                 info = reused_files[rel_path]
                 # Filter imports to exclude deleted files
-                valid_imports = [imp for imp in info.imports if imp in python_file_set]
+                valid_imports = [imp for imp in info.imports if imp in file_set]
 
                 files[rel_path] = FileInfo(
                     path=info.path,
                     file_type=info.file_type,
+                    language=info.language,
                     imports=valid_imports,
                     symbols=info.symbols,
                     test_functions=info.test_functions,
@@ -227,26 +219,21 @@ class GraphBuilder:
                 if not result:
                     continue
 
-                # Resolve imports to file paths
-                resolved_imports: list[str] = []
-                for imp in result.imports:
-                    targets = resolver.resolve(imp, rel_path)
-                    for target in targets:
-                        if target != rel_path:  # Skip self-imports
-                            resolved_imports.append(target)
-                            forward_graph[rel_path].add(target)
+                # Resolve imports (delegated to analyzer)
+                lang_files = files_by_lang.get(language, [])
+                resolved_imports = analyzer.resolve_imports(result, self.repo_root, lang_files)
 
-                # Deduplicate while preserving order
-                seen: set[str] = set()
+                # Filter self-imports and non-existent files
                 unique_imports: list[str] = []
                 for imp_path in resolved_imports:
-                    if imp_path not in seen:
-                        seen.add(imp_path)
+                    if imp_path != rel_path and imp_path in file_set:
                         unique_imports.append(imp_path)
+                        forward_graph[rel_path].add(imp_path)
 
                 files[rel_path] = FileInfo(
                     path=rel_path,
-                    file_type=FileType.SOURCE,  # Will be updated later
+                    file_type=FileType.SOURCE,  # Adjusted after reverse graph built
+                    language=language,
                     imports=unique_imports,
                     symbols=result.symbols,
                     test_functions=result.test_functions,
@@ -297,9 +284,10 @@ class GraphBuilder:
                     if importer in visited:
                         continue
                     visited.add(importer)
-
+                    
+                    # Prevent cross-language boundary resolution to avoid unexpected cross-lang test connections unless intended
+                    # Currently we trust the graph
                     if importer in test_files:
-                        # Determine relationship and confidence
                         if depth == 0:
                             relationship = Relationship.DIRECT_IMPORT
                             confidence = 0.95
@@ -340,47 +328,40 @@ class GraphBuilder:
         source_to_tests: dict[str, list[TestMapping]],
         test_to_sources: dict[str, list[str]],
     ) -> None:
-        """Add test mappings based on naming conventions.
+        """Add test mappings based on language-specific naming conventions."""
+        tests_by_lang: dict[str, set[str]] = defaultdict(set)
+        for fp, info in files.items():
+            if info.file_type == FileType.TEST:
+                tests_by_lang[info.language].add(fp)
 
-        For example, `httpx/_models.py` should map to `tests/test_models.py`
-        if such a file exists but wasn't connected via imports.
-        """
-        test_files = {
-            fp for fp, info in files.items() if info.file_type == FileType.TEST
-        }
         source_files = {
             fp for fp, info in files.items() if info.file_type == FileType.SOURCE
         }
 
-        # Build a lookup of test file basenames
-        test_basename_map: dict[str, str] = {}
-        for tf in test_files:
-            basename = Path(tf).stem  # e.g., "test_models"
-            test_basename_map[basename] = tf
-
         for source_file in source_files:
-            source_stem = Path(source_file).stem  # e.g., "_models" or "models"
-            # Strip leading underscore for matching
-            clean_stem = source_stem.lstrip("_")
+            info = files[source_file]
+            analyzer = self.registry.get_analyzer_for_file(Path(source_file))
+            if not analyzer:
+                continue
 
-            # Look for test_<name>.py
-            test_name = f"test_{clean_stem}"
-            if test_name in test_basename_map:
-                test_file = test_basename_map[test_name]
+            lang_tests = tests_by_lang.get(info.language, set())
+            heuristic_matches = analyzer.get_heuristic_matches(source_file, lang_tests)
 
-                # Check if this mapping already exists
-                existing = source_to_tests.get(source_file, [])
-                if not any(m.test_file == test_file for m in existing):
-                    if source_file not in source_to_tests:
-                        source_to_tests[source_file] = []
-                    source_to_tests[source_file].append(
-                        TestMapping(
-                            test_file=test_file,
-                            relationship=Relationship.NAMING_CONVENTION,
-                            confidence=0.60,
+            for test_file, reasons in heuristic_matches.items():
+                if "naming_convention" in reasons:
+                    # Check if this mapping already exists
+                    existing = source_to_tests.get(source_file, [])
+                    if not any(m.test_file == test_file for m in existing):
+                        if source_file not in source_to_tests:
+                            source_to_tests[source_file] = []
+                        source_to_tests[source_file].append(
+                            TestMapping(
+                                test_file=test_file,
+                                relationship=Relationship.NAMING_CONVENTION,
+                                confidence=0.60,
+                            )
                         )
-                    )
-                    if test_file not in test_to_sources:
-                        test_to_sources[test_file] = []
-                    if source_file not in test_to_sources[test_file]:
-                        test_to_sources[test_file].append(source_file)
+                        if test_file not in test_to_sources:
+                            test_to_sources[test_file] = []
+                        if source_file not in test_to_sources[test_file]:
+                            test_to_sources[test_file].append(source_file)

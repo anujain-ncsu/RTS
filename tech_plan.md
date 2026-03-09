@@ -43,19 +43,19 @@ The system is a **CLI tool** designed to be downloaded and run locally on any ma
     ┌──────▼──────┐           ┌───────▼───────┐
     │   Indexer   │           │   Selector    │
     │             │           │               │
+    ┌──────▼──────┐           ┌───────▼───────┐
+    │   Indexer   │           │   Selector    │
+    │             │           │               │
     │ ┌─────────┐ │           │ ┌───────────┐ │
-    │ │AST      │ │   reads   │ │Diff Parser│ │
-    │ │Parser   │ │ ────────► │ │           │ │
+    │ │Analyzer │ │   reads   │ │Diff Parser│ │
+    │ │Registry │ │ ────────► │ │           │ │
     │ │         │ │  .rts/    │ │Graph      │ │
-    │ │Import   │ │  index    │ │Traversal  │ │
-    │ │Graph    │ │  .json    │ │           │ │
-    │ │Builder  │ │           │ │Confidence │ │
+    │ │Language │ │  index    │ │Traversal  │ │
+    │ │Plugins  │ │  .json    │ │           │ │
+    │ │(Py,Go,Rs│ │           │ │Confidence │ │
     │ │         │ │           │ │Scorer     │ │
-    │ │Test     │ │           │ └───────────┘ │
-    │ │Mapper   │ │           │               │
-    │ │         │ │           │               │
-    │ │Heuristic│ │           │               │
-    │ │Analyzer │ │           │               │
+    │ │Graph    │ │           │ └───────────┘ │
+    │ │Builder  │ │           │               │
     │ └─────────┘ │           │               │
     └─────────────┘           └───────────────┘
 ```
@@ -73,18 +73,15 @@ The system is a **CLI tool** designed to be downloaded and run locally on any ma
 
 | Step | What it does | Technique |
 |------|-------------|-----------|
-| **1. Discovery** | Find all `.py` files in the repo | `os.walk` / `pathlib.rglob` |
-| **2. AST Parsing (primary)** | Parse each file into an AST | `ast.parse()` — stdlib, zero deps |
-| **2b. Regex Fallback** | For files that fail AST parsing (syntax errors, partial files) | Regex patterns for `import X` / `from X import Y` |
-| **3. Import Extraction** | Extract all `import` and `from X import Y` statements | AST visitor on `Import` / `ImportFrom` nodes (+ regex fallback) |
-| **4. Symbol Extraction** | Extract defined classes, functions, top-level names | AST visitor on `ClassDef` / `FunctionDef` / `Assign` nodes |
-| **5. Import Resolution** | Resolve relative/absolute imports to file paths | Custom resolver using `sys.path`-like logic |
-| **6. Graph Construction** | Build a directed dependency graph: file → [files it imports] | `dict[str, set[str]]` adjacency list |
-| **7. Test Classification** | Classify files as "test" or "source" | Heuristics: path contains `test`, file starts with `test_`, function names start with `test_` |
-| **8. Test Mapping** | Map source files → test files that depend on them (directly or transitively) | Reverse the dependency graph edges, then BFS/DFS from each source file |
-| **9. Heuristic Enrichment** | Add naming-convention matches (e.g., `_models.py` ↔ `test_models.py`) | String matching and path-based conventions |
-| **10. Persistence** | Serialize the index to JSON | `json.dump()` to `.rts/index.json` |
-| **11. Incremental Update** | Re-index only changed files | Compare `mtime` and `size` with existing index |
+| **1. Discovery** | Find all files matching registered plugins (`.py`, `.go`, `.rs`) | `os.walk` / `pathlib.rglob` |
+| **2. Plugin Parsing** | Extract imports, test functions from language plugins | `AnalyzerRegistry` loops over `LanguageAnalyzer` protocols |
+| **3. Import Resolution** | Resolve imports via language-specific mechanisms | E.g., sys.path for Python, mod/crate for Rust, dir for Go |
+| **4. Graph Construction** | Build universal directed dependency graph | `dict[str, set[str]]` adjacency list |
+| **5. Test Classification** | Classify files via language-specific heuristics | Plugin rules (e.g., `_test.go`, in `tests/`, etc.) |
+| **6. Test Mapping** | Map source files → test files that depend on them | Reverse graph + BFS traversal |
+| **7. Heuristics** | Add language-specific naming convention matches | Handled by `get_heuristic_matches` |
+| **8. Persistence** | Serialize the index to JSON | `json.dump()` to `.rts/index.json` |
+| **9. Incremental Update** | Re-index only changed files | Compare `mtime` and `size` with existing index |
 
 ### 1.1 Incremental Indexing
 
@@ -196,21 +193,28 @@ RTS/
 ├── rts/                        # Main package
 │   ├── __init__.py
 │   ├── cli.py                  # Click-based CLI entry point
+│   ├── analyzers/              # Multi-language plugin system
+│   │   ├── __init__.py         # Registers Python, Go, Rust
+│   │   ├── base.py             # LanguageAnalyzer Protocol
+│   │   ├── registry.py         # Plugin Registry
+│   │   ├── python_analyzer.py  # Python Logic
+│   │   ├── go_analyzer.py      # Go Logic
+│   │   └── rust_analyzer.py    # Rust Logic
 │   ├── indexer/
 │   │   ├── __init__.py
-│   │   ├── ast_parser.py       # AST parsing and import/symbol extraction
-│   │   ├── regex_parser.py     # Regex-based fallback for broken/partial files
-│   │   ├── import_resolver.py  # Resolves import strings to file paths
-│   │   ├── graph_builder.py    # Builds the dependency graph
-│   │   ├── test_classifier.py  # Classifies files as test vs source
-│   │   └── index_store.py      # Serialization / deserialization of the index
+│   │   ├── ast_parser.py       # Legacy / Python deep parser
+│   │   ├── regex_parser.py     # Python Regex fallback
+│   │   ├── import_resolver.py  # Python strict resolution
+│   │   ├── test_classifier.py  # Shared text classification tools
+│   │   ├── graph_builder.py    # Language-agnostic graph orchestrated via plugins
+│   │   └── index_store.py      # Index I/O
 │   ├── selector/
 │   │   ├── __init__.py
-│   │   ├── diff_parser.py      # Parses unified diffs, commit ranges, file lists
-│   │   ├── graph_traversal.py  # Walks the dependency graph at various depths
-│   │   ├── heuristics.py       # Naming convention & path-based matching
-│   │   └── scorer.py           # Confidence scoring logic
-│   └── models.py               # Shared data models (dataclasses)
+│   │   ├── diff_parser.py      # Parses diffs/commits
+│   │   ├── graph_traversal.py  # Language-agnostic BFS
+│   │   ├── heuristics.py       # Dispatches matching to Analyzer instances
+│   │   └── scorer.py           # Scoring
+│   └── models.py               # Shared Data (FileInfo, IndexData)
 ├── tests/                      # Our own tests for RTS
 │   ├── __init__.py
 │   ├── test_ast_parser.py
@@ -368,9 +372,8 @@ time python -m rts select --repo /path/to/marshmallow-test --files src/marshmall
 1. **Coverage-based refinement** — Run tests with `coverage.py` and use actual coverage data to refine the index (increases accuracy at the cost of heavier indexing)
 2. **Git history analysis** — Analyze co-change patterns: files that historically change together likely need the same tests
 3. **Function-level granularity** — Track dependencies at the function/class level rather than file level
-4. **Multi-language support** — Add Go and Rust analyzers using tree-sitter for AST parsing
-6. **Watch mode** — Re-index automatically on file change using `watchdog`
-7. **CI integration** — Output in JUnit XML or GitHub Actions-compatible format
+4. **Watch mode** — Re-index automatically on file change using `watchdog`
+5. **CI integration** — Output in JUnit XML or GitHub Actions-compatible format
 8. **Caching layer** — Cache selector results for identical diffs
 9. **SQLite backend** — Migrate from JSON to SQLite for repos with 10,000+ files
 10. **pytest plugin** — Integrate directly as a pytest plugin (`pytest --rts`)

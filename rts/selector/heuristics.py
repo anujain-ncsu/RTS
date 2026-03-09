@@ -10,6 +10,7 @@ import logging
 from pathlib import Path
 
 from rts.models import FileType, IndexData
+from rts.analyzers.registry import get_registry
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +20,7 @@ class Heuristics:
 
     def __init__(self, index: IndexData) -> None:
         self.index = index
+        self.registry = get_registry()
         self._test_files: set[str] = {
             fp
             for fp, info in self.index.files.items()
@@ -59,14 +61,18 @@ class Heuristics:
 
         for changed_file in changed_files:
             p = Path(changed_file)
-            source_stem = p.stem.lstrip("_")  # "_models" -> "models"
-
-            # 1. Naming convention: source.py -> test_source.py
-            test_stem = f"test_{source_stem}"
-            for candidate in self._test_by_stem.get(test_stem, []):
+            analyzer = self.registry.get_analyzer_for_file(p)
+            if not analyzer:
+                continue
+                
+            lang_test_files = {tf for tf in self._test_files if self.index.files[tf].language == analyzer.language_name}
+            
+            # 1. Naming convention: delegate to analyzer
+            analyzer_matches = analyzer.get_heuristic_matches(changed_file, lang_test_files)
+            for candidate, reasons in analyzer_matches.items():
                 if candidate not in already:
-                    matches.setdefault(candidate, []).append(
-                        f"naming_convention({p.name})"
+                    matches.setdefault(candidate, []).extend(
+                        [f"{r}({p.name})" for r in reasons]
                     )
 
             # 2. Same package: tests in the same directory as the changed file
