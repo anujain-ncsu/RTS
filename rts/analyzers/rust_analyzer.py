@@ -82,16 +82,29 @@ class RustAnalyzer(LanguageAnalyzer):
                         continue
                         
                     target_stem = parts[-1]
-                    # Try to match the path segments `src/foo/bar.rs` or `src/foo.rs`
-                    # Heuristic: just check if any part substring matches an actual file
+                    preceding_segments = parts[:-1]
+                    
                     for f in all_files_in_lang:
                         if not f.endswith(".rs"):
                             continue
-                        f_stem = Path(f).stem
+                        f_path = Path(f)
+                        f_stem = f_path.stem
+                        f_parts = f_path.with_suffix("").parts
+                        
                         if f_stem == target_stem:
-                            resolved_files.add(f)
-                        elif f_stem == "mod" and Path(f).parent.name == target_stem:
-                            resolved_files.add(f)
+                            parent_parts = list(f_parts[:-1])
+                            if not preceding_segments or (
+                                len(parent_parts) >= len(preceding_segments) and
+                                parent_parts[-len(preceding_segments):] == preceding_segments
+                            ):
+                                resolved_files.add(f)
+                        elif f_stem == "mod" and f_path.parent.name == target_stem:
+                            parent_parts = list(f_parts[:-2])
+                            if not preceding_segments or (
+                                len(parent_parts) >= len(preceding_segments) and
+                                parent_parts[-len(preceding_segments):] == preceding_segments
+                            ):
+                                resolved_files.add(f)
 
         return list(resolved_files)
 

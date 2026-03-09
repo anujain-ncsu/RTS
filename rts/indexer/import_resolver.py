@@ -60,7 +60,10 @@ class ImportResolver:
                 if module_path.startswith("src."):
                     stripped = module_path[4:]  # remove "src."
                     if stripped:
-                        self._module_to_file[stripped] = file_path
+                        if stripped not in self._module_to_file:
+                            self._module_to_file[stripped] = file_path
+                        else:
+                            logger.debug("Skipping overwrite of %s with %s", stripped, file_path)
 
     def resolve(
         self, import_info: ImportInfo, source_file: str
