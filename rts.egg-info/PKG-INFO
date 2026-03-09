@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: rts
+Version: 0.1.0
+Summary: Relevant Test Selector - predict which tests to run for a given diff
+Home-page: UNKNOWN
+Author: RTS
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.9
+Provides-Extra: dev
+
+UNKNOWN
+
