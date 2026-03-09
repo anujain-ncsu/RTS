@@ -7,7 +7,7 @@ then runs the actual test suite at each commit to compare predictions vs reality
 Approach:
   1. Build the index at HEAD.
   2. For each historical commit:
-     a. Determine changed Python files.
+     a. Determine changed matching files.
      b. Run the selector to predict relevant tests.
      c. Checkout that commit.
      d. Run ALL tests (with per-test timeout to handle network tests).
@@ -18,7 +18,7 @@ Miss Rate = (# of test files that failed but were NOT selected) /
             (# of test files that failed)
 
 Usage:
-    python3 scripts/validate.py --repo /tmp/httpx-test --commits 30
+    python3 scripts/validate.py --repo /tmp/httpx-test --commits 30 --language python
 """
 
 from __future__ import annotations
@@ -47,13 +47,13 @@ logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
-def get_commits_with_python_changes(repo_path: str, count: int) -> list[dict]:
-    """Get recent non-merge commits that modified Python source or test files."""
+def get_commits_with_changes(repo_path: str, count: int, file_ext: str) -> list[dict]:
+    """Get recent non-merge commits that modified source or test files."""
     result = subprocess.run(
         [
             "git", "log", "--oneline", "--no-merges",
             "--format=%H|%s",
-            "--", "*.py",
+            "--", f"*{file_ext}",
         ],
         cwd=repo_path,
         capture_output=True, text=True, check=True,
@@ -82,17 +82,16 @@ def get_changed_files(repo_path: str, commit_hash: str) -> list[str]:
     return [f.strip() for f in result.stdout.strip().split("\n") if f.strip()]
 
 
-def run_tests_at_commit(repo_path: str, commit_hash: str) -> dict:
+def run_tests_at_commit(repo_path: str, commit_hash: str, language: str) -> dict:
     """Checkout a commit and run ALL tests, capturing per-test outcomes.
 
-    Uses --timeout=15 per-test (for network-heavy tests).
-    Does NOT use -x so that the full suite is run.
+    Uses appropriate timeouts for network-heavy tests.
 
     Returns:
         dict with keys:
-          - passed_tests: list of pytest node IDs that passed
-          - failed_tests: list of pytest node IDs that failed
-          - errored_tests: list of pytest node IDs that errored (timeout, import err)
+          - passed_tests: list of test identifiers that passed
+          - failed_tests: list of test identifiers that failed
+          - errored_tests: list of test identifiers that errored (timeout, import err)
           - total_run: total tests executed
           - run_error: string if the entire run errored
     """
@@ -103,58 +102,107 @@ def run_tests_at_commit(repo_path: str, commit_hash: str) -> dict:
         capture_output=True, text=True, check=True,
     )
 
-    # Run all tests with verbose output, per-test timeout
-    try:
-        result = subprocess.run(
-            [
-                sys.executable, "-m", "pytest",
-                "tests/", "-v", "--tb=no", "--no-header",
-                "--timeout=15",
-            ],
-            cwd=repo_path,
-            capture_output=True, text=True,
-            timeout=600,  # Overall 10-minute cap
-        )
-    except subprocess.TimeoutExpired:
-        return {
-            "passed_tests": [], "failed_tests": [], "errored_tests": [],
-            "total_run": 0, "run_error": "Overall test run timed out (600s)",
-        }
-    except Exception as e:
-        return {
-            "passed_tests": [], "failed_tests": [], "errored_tests": [],
-            "total_run": 0, "run_error": str(e),
-        }
-
-    # Parse pytest -v output lines:
-    #   tests/test_foo.py::test_bar PASSED
-    #   tests/test_foo.py::test_baz FAILED
-    #   tests/test_foo.py::test_qux ERROR
     passed, failed, errored = [], [], []
-
-    for line in result.stdout.split("\n"):
-        line = line.strip()
-        if not line or "::" not in line:
-            continue
-
-        if " PASSED" in line:
-            nodeid = line.rsplit(" PASSED", 1)[0].strip()
-            passed.append(nodeid)
-        elif " FAILED" in line:
-            nodeid = line.rsplit(" FAILED", 1)[0].strip()
-            failed.append(nodeid)
-        elif " ERROR" in line:
-            nodeid = line.rsplit(" ERROR", 1)[0].strip()
-            errored.append(nodeid)
-        elif " XFAIL" in line or " XPASS" in line or " SKIPPED" in line:
-            pass  # Ignore expected failures/skips
-
     run_error = None
-    if result.returncode != 0 and not failed and not errored and not passed:
-        # Collection error or setup failure
-        stderr_snippet = (result.stderr or "")[:800]
-        stdout_snippet = (result.stdout or "")[:800]
-        run_error = f"pytest exit code {result.returncode}. stderr: {stderr_snippet}. stdout: {stdout_snippet}"
+
+    if language == "go":
+        try:
+            # We must use go test -json ./...
+            result = subprocess.run(
+                ["go", "test", "-json", "./...", "-timeout=15s"],
+                cwd=repo_path,
+                capture_output=True, text=True,
+                timeout=600,
+            )
+        except subprocess.TimeoutExpired:
+            return {
+                "passed_tests": [], "failed_tests": [], "errored_tests": [],
+                "total_run": 0, "run_error": "Overall test run timed out (600s)",
+            }
+        except Exception as e:
+            return {
+                "passed_tests": [], "failed_tests": [], "errored_tests": [],
+                "total_run": 0, "run_error": str(e),
+            }
+
+        passed_set, failed_set = set(), set()
+        
+        for line in result.stdout.split("\n"):
+            line = line.strip()
+            if not line or not line.startswith("{"):
+                continue
+            try:
+                event = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+                
+            if "Test" in event and "Action" in event:
+                test_name = event["Test"]
+                action = event["Action"]
+                pkg = event.get("Package", "")
+                
+                # nodeid to be processed later by looking up test functions
+                nodeid = f"{pkg}::{test_name}"
+                
+                if action == "pass":
+                    passed_set.add(nodeid)
+                elif action == "fail":
+                    failed_set.add(nodeid)
+        
+        passed = list(passed_set)
+        failed = list(failed_set)
+
+        if result.returncode != 0 and not failed and not passed:
+            stderr_snippet = (result.stderr or "")[:800]
+            stdout_snippet = (result.stdout or "")[:800]
+            run_error = f"go test exit code {result.returncode}. stderr: {stderr_snippet}. stdout: {stdout_snippet}"
+
+    else:
+        try:
+            result = subprocess.run(
+                [
+                    sys.executable, "-m", "pytest",
+                    "tests/", "-v", "--tb=no", "--no-header",
+                    "--timeout=15",
+                ],
+                cwd=repo_path,
+                capture_output=True, text=True,
+                timeout=600,  # Overall 10-minute cap
+            )
+        except subprocess.TimeoutExpired:
+            return {
+                "passed_tests": [], "failed_tests": [], "errored_tests": [],
+                "total_run": 0, "run_error": "Overall test run timed out (600s)",
+            }
+        except Exception as e:
+            return {
+                "passed_tests": [], "failed_tests": [], "errored_tests": [],
+                "total_run": 0, "run_error": str(e),
+            }
+
+        # Parse pytest -v output lines:
+        for line in result.stdout.split("\n"):
+            line = line.strip()
+            if not line or "::" not in line:
+                continue
+
+            if " PASSED" in line:
+                nodeid = line.rsplit(" PASSED", 1)[0].strip()
+                passed.append(nodeid)
+            elif " FAILED" in line:
+                nodeid = line.rsplit(" FAILED", 1)[0].strip()
+                failed.append(nodeid)
+            elif " ERROR" in line:
+                nodeid = line.rsplit(" ERROR", 1)[0].strip()
+                errored.append(nodeid)
+            elif " XFAIL" in line or " XPASS" in line or " SKIPPED" in line:
+                pass  # Ignore expected failures/skips
+
+        if result.returncode != 0 and not failed and not errored and not passed:
+            # Collection error or setup failure
+            stderr_snippet = (result.stderr or "")[:800]
+            stdout_snippet = (result.stdout or "")[:800]
+            run_error = f"pytest exit code {result.returncode}. stderr: {stderr_snippet}. stdout: {stdout_snippet}"
 
     return {
         "passed_tests": passed,
@@ -165,12 +213,12 @@ def run_tests_at_commit(repo_path: str, commit_hash: str) -> dict:
     }
 
 
-def run_selector(index_data, changed_python_files, thoroughness):
+def run_selector(index_data, changed_files, thoroughness, language="python"):
     """Run the selector and return dict of selected test_file -> info."""
     traversal = GraphTraversal(index_data)
     scorer = Scorer()
 
-    affected = traversal.find_affected_tests(changed_python_files, thoroughness)
+    affected = traversal.find_affected_tests(changed_files, thoroughness)
 
     selected = {}
     for test_file, depth in affected.items():
@@ -184,7 +232,7 @@ def run_selector(index_data, changed_python_files, thoroughness):
     if thoroughness == Thoroughness.THOROUGH:
         heuristics = Heuristics(index_data)
         heuristic_matches = heuristics.find_related_tests(
-            changed_python_files,
+            changed_files,
             already_selected=set(selected.keys()),
         )
         for test_file, reasons in heuristic_matches.items():
@@ -195,8 +243,12 @@ def run_selector(index_data, changed_python_files, thoroughness):
             }
 
     import re
-    test_pattern = re.compile(r"^tests/.*_test.*\.py|.*test_.*\.py")
-    for changed_file in changed_python_files:
+    if language == "go":
+        test_pattern = re.compile(r".*_test\.go$")
+    else:
+        test_pattern = re.compile(r"^tests/.*_test.*\.py|.*test_.*\.py")
+        
+    for changed_file in changed_files:
         if test_pattern.search(changed_file) or (
             changed_file in index_data.files and index_data.files[changed_file].file_type == FileType.TEST
         ):
@@ -239,12 +291,12 @@ _TRIVIAL_MSG_PATTERNS = [
 _TRIVIAL_MSG_RE = [__import__("re").compile(p) for p in _TRIVIAL_MSG_PATTERNS]
 
 
-def _diff_is_whitespace_only(repo_path: str, commit_hash: str) -> bool:
-    """Return True if the commit's Python diffs are purely whitespace/comment changes."""
+def _diff_is_whitespace_only(repo_path: str, commit_hash: str, file_ext: str = ".py") -> bool:
+    """Return True if the commit's diffs are purely whitespace/comment changes."""
     try:
         result = subprocess.run(
             ["git", "diff", "-U0", "--ignore-all-space",
-             f"{commit_hash}~1..{commit_hash}", "--", "*.py"],
+             f"{commit_hash}~1..{commit_hash}", "--", f"*{file_ext}"],
             cwd=repo_path, capture_output=True, text=True, check=True,
         )
     except subprocess.CalledProcessError:
@@ -255,16 +307,16 @@ def _diff_is_whitespace_only(repo_path: str, commit_hash: str) -> bool:
         if line.startswith("+") and not line.startswith("+++"):
             content = line[1:].strip()
             # Skip blank lines and comment-only lines
-            if content and not content.startswith("#"):
+            if content and not (content.startswith("#") or content.startswith("//")):
                 return False
         elif line.startswith("-") and not line.startswith("---"):
             content = line[1:].strip()
-            if content and not content.startswith("#"):
+            if content and not (content.startswith("#") or content.startswith("//")):
                 return False
     return True
 
 
-def is_trivial_commit(repo_path: str, commit_hash: str, commit_msg: str) -> bool:
+def is_trivial_commit(repo_path: str, commit_hash: str, commit_msg: str, file_ext: str = ".py") -> bool:
     """Return True if a commit is non-substantial (linting, formatting, comments, etc.)."""
     # 1. Check commit message against known trivial patterns
     for regex in _TRIVIAL_MSG_RE:
@@ -272,7 +324,7 @@ def is_trivial_commit(repo_path: str, commit_hash: str, commit_msg: str) -> bool
             return True
 
     # 2. Check if the actual diff is whitespace/comment-only
-    if _diff_is_whitespace_only(repo_path, commit_hash):
+    if _diff_is_whitespace_only(repo_path, commit_hash, file_ext):
         return True
 
     return False
@@ -285,6 +337,7 @@ def main():
     parser.add_argument("--repo", required=True, help="Path to the repository")
     parser.add_argument("--commits", type=int, default=30, help="Number of commits")
     parser.add_argument("--thoroughness", default="standard")
+    parser.add_argument("--language", default="python", choices=["python", "go"])
     parser.add_argument("--output-dir", default=None)
     parser.add_argument("--skip-trivial", action="store_true",
                         help="Skip non-substantial commits (linting, formatting, typos, etc.)")
@@ -295,11 +348,14 @@ def main():
     thoroughness = Thoroughness(args.thoroughness)
     output_dir = args.output_dir or str(Path(__file__).parent.parent / "Validation")
     os.makedirs(output_dir, exist_ok=True)
+    
+    file_ext = ".go" if args.language == "go" else ".py"
 
     print("=" * 60)
     print("RTS VALIDATION AGAINST HISTORICAL COMMITS")
     print("=" * 60)
     print(f"Repository:   {repo_path}")
+    print(f"Language:     {args.language}")
     print(f"Thoroughness: {thoroughness.value}")
     print(f"Commits:      {args.commits}")
     print(f"Skip trivial: {args.skip_trivial}")
@@ -333,10 +389,10 @@ def main():
     print()
 
     # Get commits
-    print(f"Fetching commits with Python changes...")
+    print(f"Fetching commits with {args.language} changes...")
     # Request extra to handle skips (more if filtering trivial commits)
     fetch_count = args.commits * 3 if args.skip_trivial else args.commits + 15
-    all_commits = get_commits_with_python_changes(repo_path, fetch_count)
+    all_commits = get_commits_with_changes(repo_path, fetch_count, file_ext)
     print(f"Found {len(all_commits)} candidate commits")
     print()
 
@@ -364,32 +420,32 @@ def main():
         # Get changed files
         try:
             all_changed = get_changed_files(repo_path, commit_hash)
-            changed_py = [f for f in all_changed if f.endswith(".py")]
+            changed_target_files = [f for f in all_changed if f.endswith(file_ext)]
         except subprocess.CalledProcessError:
             print(f"  ⚠ Skipping (can't diff, possibly initial commit)")
             continue
 
-        if not changed_py:
-            print(f"  ⚠ No Python files changed, skipping")
+        if not changed_target_files:
+            print(f"  ⚠ No {args.language} files changed, skipping")
             continue
 
         # Skip trivial commits if requested
-        if args.skip_trivial and is_trivial_commit(repo_path, commit_hash, commit["message"]):
+        if args.skip_trivial and is_trivial_commit(repo_path, commit_hash, commit["message"], file_ext):
             print(f"  ⚠ Trivial commit (linting/formatting/comments), skipping")
             trivial_skipped += 1
             continue
 
         # Run selector
         t0 = time.time()
-        selected = run_selector(index_data, changed_py, thoroughness)
+        selected = run_selector(index_data, changed_target_files, thoroughness, args.language)
         select_ms = (time.time() - t0) * 1000
         selected_files = set(selected.keys())
 
-        print(f"  Changed: {len(changed_py)} py file(s)  |  Selected: {len(selected_files)} test(s) ({select_ms:.1f}ms)")
+        print(f"  Changed: {len(changed_target_files)} {file_ext} file(s)  |  Selected: {len(selected_files)} test(s) ({select_ms:.1f}ms)")
 
         # Run actual tests at this commit
         t1 = time.time()
-        test_out = run_tests_at_commit(repo_path, commit_hash)
+        test_out = run_tests_at_commit(repo_path, commit_hash, args.language)
         test_secs = time.time() - t1
 
         if test_out["run_error"]:
@@ -398,11 +454,25 @@ def main():
         # Aggregate failed files (count FAILED and ERROR separately)
         failed_file_set = set()
         for nodeid in test_out["failed_tests"]:
-            failed_file_set.add(nodeid_to_file(nodeid))
+            if args.language == "go":
+                test_name = nodeid.split("::")[-1]
+                file_found = False
+                for fp, info in index_data.files.items():
+                    if test_name in info.test_functions:
+                        failed_file_set.add(fp)
+                        file_found = True
+                        break
+                if not file_found:
+                    print(f"    ⚠ Could not map failed test {test_name} to a file")
+            else:
+                failed_file_set.add(nodeid_to_file(nodeid))
 
         errored_file_set = set()
         for nodeid in test_out["errored_tests"]:
-            errored_file_set.add(nodeid_to_file(nodeid))
+            if args.language == "go":
+                pass
+            else:
+                errored_file_set.add(nodeid_to_file(nodeid))
 
         # For miss rate, we focus on FAILED (genuine failures) not errors
         # (which are typically timeouts/import issues)
@@ -435,7 +505,7 @@ def main():
             "commit_hash": commit_hash,
             "commit_message": commit["message"],
             "changed_files": all_changed,
-            "changed_python_files": changed_py,
+            f"changed_{args.language}_files": changed_target_files,
             "selector": {
                 "thoroughness": thoroughness.value,
                 "time_ms": round(select_ms, 2),
@@ -511,6 +581,7 @@ def main():
             "validation_timestamp": datetime.now(timezone.utc).isoformat(),
             "rts_version": "0.1.0",
             "thoroughness_level": thoroughness.value,
+            "language": args.language,
             "index_built_from": f"HEAD ({original_head[:8]})",
             "total_files_in_index": len(index_data.files),
             "total_test_files_in_index": len(test_files_in_index),
@@ -519,7 +590,7 @@ def main():
         "commits": results,
     }
 
-    filename = f"validation_results_{repo_name}_{timestamp}.json"
+    filename = f"validation_results_{repo_name}_{args.language}_{timestamp}.json"
     output_path = Path(output_dir) / filename
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
