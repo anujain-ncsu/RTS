@@ -1,0 +1,247 @@
+============================================================
+RTS VALIDATION AGAINST HISTORICAL COMMITS
+============================================================
+Repository:   /Users/macmini/Desktop/Antigravity/marshmallow-test
+Thoroughness: standard
+Commits:      50
+Skip trivial: True
+
+Building index at HEAD...
+Index: 38 files, 18 test files
+
+Fetching commits with Python changes...
+Found 150 candidate commits
+
+[1/50] 70fb5995: More linking to marshmallow.Schema.Meta (#2759)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (2.5ms)
+  Tests: 1223 run, 0 failed, 0 errors  (68.0s)
+  ✅ No test failures
+[2/50] ff82d87d: Remove unnecessary import alias (#2758)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (0.7ms)
+  Tests: 1223 run, 0 failed, 0 errors  (42.4s)
+  ✅ No test failures
+[3/50] a3ff44eb: Improve readability of summary tables (#2757)
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (0.8ms)
+  Tests: 1223 run, 0 failed, 0 errors  (26.9s)
+  ✅ No test failures
+[4/50] 36cfabf3: Only show types in arg descriptions
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (1.0ms)
+  Tests: 1223 run, 0 failed, 0 errors  (27.2s)
+  ✅ No test failures
+[5/50] 10332c59: Fix a few type annotations in fields and class_registry (#2756)
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (0.8ms)
+  Tests: 1223 run, 0 failed, 0 errors  (30.6s)
+  ✅ No test failures
+[6/50] f907ced0: Use Validator type (#2754)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (1.0ms)
+  Tests: 1223 run, 0 failed, 0 errors  (27.7s)
+  ✅ No test failures
+[7/50] 2c0c75fe: Add config for view button (#2753)
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (0.9ms)
+  Tests: 1223 run, 0 failed, 0 errors  (22.5s)
+  ✅ No test failures
+[8/50] fe53fd0b: More documentation improvements (#2751)
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (0.6ms)
+  Tests: 1223 run, 0 failed, 0 errors  (47.9s)
+  ✅ No test failures
+[9/50] 05cdf8ce: Document base field deprecations in API docs (#2750)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (1.0ms)
+  Tests: 1223 run, 0 failed, 0 errors  (61.8s)
+  ✅ No test failures
+[10/50] 1d086ffc: Migrate docs theme to furo (#2748)
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (0.5ms)
+  Tests: 1223 run, 0 failed, 0 errors  (84.5s)
+  ✅ No test failures
+[11/50] 83c409d5: Minor documentation improvements (#2746)
+  Changed: 8 py file(s)  |  Selected: 16 test(s) (1.5ms)
+  Tests: 1223 run, 0 failed, 0 errors  (55.9s)
+  ✅ No test failures
+[12/50] e2038e00: Restore SchemaABC for backwards-compatibility (#2745)
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (3.4ms)
+  Tests: 1223 run, 0 failed, 0 errors  (51.4s)
+  ✅ No test failures
+[13/50] 5eb22423: Fix opts typing (#2744)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (2.3ms)
+  Tests: 1223 run, 0 failed, 0 errors  (64.0s)
+  ✅ No test failures
+[14/50] 73a35694: Improve types for get_declard_fields (#2742)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (2.4ms)
+  Tests: 1223 run, 0 failed, 0 errors  (47.1s)
+  ✅ No test failures
+[15/50] 953a6a59: Avoid breaking inspect.signature on fields (#2741)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (1.4ms)
+  Tests: 1223 run, 0 failed, 0 errors  (48.8s)
+  ✅ No test failures
+[16/50] 6c1a95d1: Add top-level API to API docs; use explicit references to Schema (#274
+  Changed: 4 py file(s)  |  Selected: 16 test(s) (2.7ms)
+  Tests: 1223 run, 0 failed, 0 errors  (75.1s)
+  ✅ No test failures
+[17/50] 09029410: Fix typing for class_registry.get_class (#2735)
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (0.8ms)
+  Tests: 1223 run, 0 failed, 0 errors  (53.5s)
+  ✅ No test failures
+[18/50] 8ca596d9: Deprecation warnings for marshmallow 4 changes (#2732)
+  Changed: 9 py file(s)  |  Selected: 16 test(s) (1.2ms)
+  Tests: 1223 run, 0 failed, 0 errors  (58.0s)
+  ✅ No test failures
+[19/50] 71ab95a9: Deprecate context (#2731)
+  Changed: 4 py file(s)  |  Selected: 16 test(s) (1.7ms)
+  Tests: 1231 run, 0 failed, 0 errors  (67.4s)
+  ✅ No test failures
+[20/50] ea2b0edc: Make casing consistent across docs (#2726)
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (0.4ms)
+  Tests: 1231 run, 0 failed, 0 errors  (35.8s)
+  ✅ No test failures
+[21/50] 560eed7a: Fix typing for schema param of _bind_to_schema (#2724)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (0.7ms)
+  Tests: 1231 run, 0 failed, 0 errors  (36.9s)
+  ✅ No test failures
+[22/50] 447eb86c: Various typing improvements to fields module (#2723)
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (1.4ms)
+  Tests: 1231 run, 0 failed, 0 errors  (20.9s)
+  ✅ No test failures
+[23/50] c188cdb2: Fixes and improvements to Nested typing (#2721)
+  Changed: 4 py file(s)  |  Selected: 16 test(s) (0.8ms)
+  Tests: 1231 run, 0 failed, 0 errors  (23.5s)
+  ✅ No test failures
+[24/50] f4ca03fd: Replace type comments with inline typing (#2718)
+  Changed: 4 py file(s)  |  Selected: 16 test(s) (9.0ms)
+  Tests: 1231 run, 0 failed, 0 errors  (18.1s)
+  ✅ No test failures
+[25/50] bf8bfc29: More documentation cleanup (#2714)
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (0.9ms)
+  Tests: 1231 run, 0 failed, 0 errors  (32.1s)
+  ✅ No test failures
+[26/50] f2836d59: Documentation cleanup (#2713)
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (1.1ms)
+  Tests: 1231 run, 0 failed, 0 errors  (61.0s)
+  ✅ No test failures
+[27/50] fd79660a: Fix typing for Schema.from_dict (#2712)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (1.1ms)
+  Tests: 1231 run, 0 failed, 0 errors  (54.9s)
+  ✅ No test failures
+[28/50] 02954e4c: Update Python docs link
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (0.8ms)
+  Tests: 1231 run, 0 failed, 0 errors  (64.3s)
+  ✅ No test failures
+[29/50] 2b835ece: Fix format specifiers in get_fixed_timezone
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (0.7ms)
+  Tests: 1231 run, 0 failed, 0 errors  (92.8s)
+  ✅ No test failures
+[30/50] 949c91e8: Use format specifiers instead of percent format
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (0.9ms)
+  Tests: 1231 run, 0 failed, 0 errors  (30.9s)
+  ✅ No test failures
+[31/50] 19bc97b5: Improve type hint formatting for Field, Nested and Function fields to 
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (0.8ms)
+  Tests: 1231 run, 0 failed, 0 errors  (29.9s)
+  ✅ No test failures
+[32/50] 6654eafc: Remove Fern sponsor message
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (1.0ms)
+  Tests: 1231 run, 0 failed, 0 errors  (96.5s)
+  ✅ No test failures
+[33/50] 91d5c0ca: Document "absolute" URL field parameter (#2327)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (0.9ms)
+  Tests: 1231 run, 0 failed, 0 errors  (63.2s)
+  ✅ No test failures
+[34/50] 0a7d5431: Replace typing.Dict/List/Tuple/Type with dict/list/tuple/type
+  Changed: 3 py file(s)  |  Selected: 16 test(s) (1.0ms)
+  Tests: 1231 run, 0 failed, 0 errors  (67.3s)
+  ✅ No test failures
+[35/50] 230aa279: Use ZoneInfo instead of pytz
+  Changed: 4 py file(s)  |  Selected: 8 test(s) (0.5ms)
+  Tests: 1231 run, 0 failed, 0 errors  (78.2s)
+  ✅ No test failures
+[36/50] 4976d834: Fix _deserialize type hints
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (4.1ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (15.3s)
+  ✅ No test failures
+[37/50] eeba8358: Fix _serialize type hints
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (1.6ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (13.3s)
+  ✅ No test failures
+[38/50] c914b2a9: Fix generic schema type hints
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (1.1ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (13.8s)
+  ✅ No test failures
+[39/50] 457d9a71: Typing: replace "type" with specific metaclass
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (3.5ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (13.6s)
+  ✅ No test failures
+[40/50] 6e2b3129: Add Fern sponsor message
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (1.1ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (15.5s)
+  ✅ No test failures
+[41/50] 7b62f3e1: Normalize benchmark per dump for object count
+  Changed: 1 py file(s)  |  Selected: 0 test(s) (0.5ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (9.8s)
+  ✅ No test failures
+[42/50] 593b7fec: Simplify tuple-keyed hook name and config dicts
+  Changed: 3 py file(s)  |  Selected: 16 test(s) (1.1ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (7.9s)
+  ✅ No test failures
+[43/50] 99103a67: Remove leaky lru_cache (#2277)
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (0.8ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (6.6s)
+  ✅ No test failures
+[44/50] c8ce7e87: Add a many Meta option
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (0.7ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (4.4s)
+  ✅ No test failures
+[45/50] 58fbbcd3: Encapsulate timestamp boolean check in utils
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (1.9ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (5.6s)
+  ✅ No test failures
+[46/50] 6e72beb7: DateTime field: reject timestamp True/False
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (1.0ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (3.8s)
+  ✅ No test failures
+[47/50] 845f573c: DateTime field: allow timestamp 0
+  Changed: 2 py file(s)  |  Selected: 16 test(s) (0.8ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (5.8s)
+  ✅ No test failures
+[48/50] 2d6e5c2a: Use format specifiers instead of percent format
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (1.5ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (4.8s)
+  ✅ No test failures
+[49/50] 2c937af3: Address deprecation warnings in tests (#2252)
+  Changed: 5 py file(s)  |  Selected: 3 test(s) (0.5ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (4.7s)
+  ✅ No test failures
+[50/50] 3e26fa20: chore: format docstrings with ruff (#2248)
+  ⚠ Trivial commit (linting/formatting/comments), skipping
+[50/50] 166e123c: Fix mypy type ignore
+  Changed: 1 py file(s)  |  Selected: 16 test(s) (1.0ms)
+  ⚠ Run error: pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/m
+  Tests: 0 run, 0 failed, 0 errors  (5.2s)
+  ✅ No test failures
+
+Restoring to HEAD...
+
+============================================================
+VALIDATION SUMMARY
+============================================================
+Commits analyzed:           50
+Trivial skipped:            1
+Commits with failures:      0
+Commits with misses:        0
+Total failed test files:    0
+Correctly selected:         0
+Missed:                     0
+MISS RATE:                  0.00%
+
+Results saved to: /Users/macmini/Desktop/Antigravity/RTS/Validation/validation_results_marshmallow-test_20260309T063410Z.json

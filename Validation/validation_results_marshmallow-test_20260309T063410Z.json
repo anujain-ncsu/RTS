@@ -1,0 +1,6457 @@
+{
+  "metadata": {
+    "repository_path": "./marshmallow-test",
+    "repository_name": "marshmallow-test",
+    "validation_timestamp": "2026-03-09T06:34:10.195245+00:00",
+    "rts_version": "0.1.0",
+    "thoroughness_level": "standard",
+    "index_built_from": "HEAD (70fb5995)",
+    "total_files_in_index": 38,
+    "total_test_files_in_index": 18
+  },
+  "summary": {
+    "total_commits_analyzed": 50,
+    "commits_with_test_failures": 0,
+    "commits_with_selector_misses": 0,
+    "trivial_skipped": 1,
+    "total_failed_test_files_across_all_commits": 0,
+    "total_correctly_selected_failures": 0,
+    "total_missed_failures": 0,
+    "miss_rate": 0.0,
+    "miss_rate_percentage": "0.00%",
+    "miss_rate_definition": "Fraction of test files that actually FAILED (not errored) but were NOT selected by the RTS selector. Lower is better. 0.00% = perfect recall."
+  },
+  "commits": [
+    {
+      "commit_hash": "70fb5995c3253453a8d0a7b64e560f808bb22501",
+      "commit_message": "More linking to marshmallow.Schema.Meta (#2759)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 2.54,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "ff82d87d5ef3e29caedc721ad646629b73f0b75d",
+      "commit_message": "Remove unnecessary import alias (#2758)",
+      "changed_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.71,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "a3ff44eb9fb4c23f14ce03ac9c7f4073c56a83c6",
+      "commit_message": "Improve readability of summary tables (#2757)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "docs/conf.py",
+        "docs/extending.rst",
+        "docs/marshmallow.schema.rst",
+        "docs/quickstart.rst",
+        "docs/top_level.rst",
+        "docs/upgrading.rst",
+        "docs/why.rst",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "docs/conf.py",
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.83,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "36cfabf394f5e46a978f8dc4e9a51fe5387c45a5",
+      "commit_message": "Only show types in arg descriptions",
+      "changed_files": [
+        "docs/conf.py"
+      ],
+      "changed_python_files": [
+        "docs/conf.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.97,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "10332c59831c763d1ff7c7f92db9bb8ca0c5a386",
+      "commit_message": "Fix a few type annotations in fields and class_registry (#2756)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/class_registry.py",
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/class_registry.py",
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.8,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "f907ced0e83dd99833904b9c7fc8ce4364aa00aa",
+      "commit_message": "Use Validator type (#2754)",
+      "changed_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.05,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "2c0c75fee871d9d311efedbad5112f064b9a174a",
+      "commit_message": "Add config for view button (#2753)",
+      "changed_files": [
+        "docs/conf.py"
+      ],
+      "changed_python_files": [
+        "docs/conf.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.86,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "fe53fd0b6a2780e29d4bf006fc863078811668da",
+      "commit_message": "More documentation improvements (#2751)",
+      "changed_files": [
+        "docs/_static/custom.css",
+        "docs/_static/marshmallow-logo-with-title-for-dark-theme.png",
+        "docs/conf.py",
+        "docs/custom_fields.rst",
+        "docs/index.rst",
+        "docs/install.rst",
+        "docs/nesting.rst",
+        "docs/quickstart.rst",
+        "docs/upgrading.rst",
+        "docs/why.rst",
+        "tox.ini"
+      ],
+      "changed_python_files": [
+        "docs/conf.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.62,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "05cdf8cebdce2ced768d27daeb2b85855f1423cc",
+      "commit_message": "Document base field deprecations in API docs (#2750)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.98,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "1d086ffc1db6a69c362dd97a9ceb1299a21db088",
+      "commit_message": "Migrate docs theme to furo (#2748)",
+      "changed_files": [
+        "docs/_static/custom.css",
+        "docs/_static/favicon_io.zip",
+        "docs/_static/marshmallow-logo-200.png",
+        "docs/_templates/donate.html",
+        "docs/_templates/useful-links.html",
+        "docs/api_reference.rst",
+        "docs/conf.py",
+        "docs/donate.rst",
+        "docs/ecosystem.rst",
+        "docs/index.rst",
+        "docs/marshmallow.class_registry.rst",
+        "docs/marshmallow.error_store.rst",
+        "docs/marshmallow.utils.rst",
+        "pyproject.toml"
+      ],
+      "changed_python_files": [
+        "docs/conf.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.54,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "83c409d5658e69f3cb7b032c703ef9dbd51b32fa",
+      "commit_message": "Minor documentation improvements (#2746)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "CONTRIBUTING.rst",
+        "README.rst",
+        "docs/_static/apple-touch-icon.png",
+        "docs/_static/favicon.ico",
+        "docs/_static/favicon_io.zip",
+        "docs/_static/marshmallow-logo-with-title.png",
+        "docs/_static/marshmallow-logo.png",
+        "docs/about.rst",
+        "docs/api_reference.rst",
+        "docs/conf.py",
+        "docs/examples.rst",
+        "docs/extending.rst",
+        "docs/index.rst",
+        "docs/install.rst",
+        "docs/marshmallow.types.rst",
+        "docs/quickstart.rst",
+        "pyproject.toml",
+        "src/marshmallow/decorators.py",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py",
+        "src/marshmallow/types.py",
+        "src/marshmallow/utils.py",
+        "src/marshmallow/validate.py",
+        "tests/test_schema.py",
+        "tox.ini"
+      ],
+      "changed_python_files": [
+        "docs/conf.py",
+        "src/marshmallow/decorators.py",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py",
+        "src/marshmallow/types.py",
+        "src/marshmallow/utils.py",
+        "src/marshmallow/validate.py",
+        "tests/test_schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.54,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "e2038e0071e134032db433f360eac3bf5ca37cb5",
+      "commit_message": "Restore SchemaABC for backwards-compatibility (#2745)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/base.py",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/base.py",
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 3.42,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "5eb2242366eb1b217dce52085b701a0138442624",
+      "commit_message": "Fix opts typing (#2744)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 2.26,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "73a35694005b3c29bce9cdd72ee6adfcf1011433",
+      "commit_message": "Improve types for get_declard_fields (#2742)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 2.41,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "953a6a59c7ee924b78645cb6ec6371bba4835a56",
+      "commit_message": "Avoid breaking inspect.signature on fields (#2741)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.43,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "6c1a95d1c60c3f84fd400398e2da4731230d3edb",
+      "commit_message": "Add top-level API to API docs; use explicit references to Schema (#2740)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "docs/api_reference.rst",
+        "docs/custom_fields.rst",
+        "docs/examples.rst",
+        "docs/extending.rst",
+        "docs/nesting.rst",
+        "docs/quickstart.rst",
+        "docs/top_level.rst",
+        "docs/upgrading.rst",
+        "src/marshmallow/decorators.py",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py",
+        "src/marshmallow/utils.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/decorators.py",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py",
+        "src/marshmallow/utils.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 2.75,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "0902941044a9810e2187141ab9174c270c2c7378",
+      "commit_message": "Fix typing for class_registry.get_class (#2735)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/class_registry.py",
+        "tests/mypy_test_cases/test_class_registry.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/class_registry.py",
+        "tests/mypy_test_cases/test_class_registry.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.77,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "8ca596d91194a6c2d0d992a7b66490a0e909d719",
+      "commit_message": "Deprecation warnings for marshmallow 4 changes (#2732)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "pyproject.toml",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/validate.py",
+        "src/marshmallow/warnings.py",
+        "tests/base.py",
+        "tests/test_decorators.py",
+        "tests/test_deserialization.py",
+        "tests/test_fields.py",
+        "tests/test_schema.py",
+        "tests/test_serialization.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py",
+        "src/marshmallow/validate.py",
+        "src/marshmallow/warnings.py",
+        "tests/base.py",
+        "tests/test_decorators.py",
+        "tests/test_deserialization.py",
+        "tests/test_fields.py",
+        "tests/test_schema.py",
+        "tests/test_serialization.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.24,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1223,
+        "passed_count": 1223,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "71ab95a9c33ecac7f86cb9bdc9351461cbf95f6a",
+      "commit_message": "Deprecate context (#2731)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/schema.py",
+        "tests/test_deserialization.py",
+        "tests/test_schema.py",
+        "tests/test_serialization.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py",
+        "tests/test_deserialization.py",
+        "tests/test_schema.py",
+        "tests/test_serialization.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.69,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "ea2b0edcaf62687de92ec4d49520d9b012a47d30",
+      "commit_message": "Make casing consistent across docs (#2726)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "CONTRIBUTING.rst",
+        "docs/code_of_conduct.rst",
+        "docs/custom_fields.rst",
+        "docs/dashing.json",
+        "docs/examples.rst",
+        "docs/extending.rst",
+        "docs/install.rst",
+        "docs/marshmallow.fields.rst",
+        "docs/nesting.rst",
+        "docs/quickstart.rst",
+        "docs/upgrading.rst",
+        "docs/why.rst",
+        "performance/benchmark.py"
+      ],
+      "changed_python_files": [
+        "performance/benchmark.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.44,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "560eed7a3c957931402b301e9a430aecb7bac75c",
+      "commit_message": "Fix typing for schema param of _bind_to_schema (#2724)",
+      "changed_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.67,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "447eb86c9c7073784ae669dc17aac3982f565952",
+      "commit_message": "Various typing improvements to fields module (#2723)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/base.py",
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/base.py",
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.39,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "c188cdb25c86c2453f904cf650f5972263956482",
+      "commit_message": "Fixes and improvements to Nested typing (#2721)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/base.py",
+        "src/marshmallow/class_registry.py",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/base.py",
+        "src/marshmallow/class_registry.py",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.85,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "f4ca03fd8f05bb825f95a8af1a6ef5066bf2f875",
+      "commit_message": "Replace type comments with inline typing (#2718)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py",
+        "src/marshmallow/validate.py",
+        "tests/base.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py",
+        "src/marshmallow/validate.py",
+        "tests/base.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 8.99,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "bf8bfc2916b78a771d8070a5ae9bf96a01c42fad",
+      "commit_message": "More documentation cleanup (#2714)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.89,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "f2836d59aaf9ce659119aca71123bef69c588c24",
+      "commit_message": "Documentation cleanup (#2713)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "docs/_static/css/versionwarning.css",
+        "docs/api_reference.rst",
+        "docs/conf.py",
+        "docs/marshmallow.fields.rst",
+        "docs/marshmallow.schema.rst",
+        "pyproject.toml",
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "docs/conf.py",
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.12,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "fd79660afac346e128693227576bb847e20a5b96",
+      "commit_message": "Fix typing for Schema.from_dict (#2712)",
+      "changed_files": [
+        "CHANGELOG.rst",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.08,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "02954e4c4cd7cde4c43da033d69283c1de721395",
+      "commit_message": "Update Python docs link",
+      "changed_files": [
+        "docs/conf.py"
+      ],
+      "changed_python_files": [
+        "docs/conf.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.76,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "2b835ecea5edacf81ac2320a6f065eec91c46214",
+      "commit_message": "Fix format specifiers in get_fixed_timezone",
+      "changed_files": [
+        "src/marshmallow/utils.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/utils.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.68,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "949c91e86db8b4bdc84a00f5d9e81355f66022e8",
+      "commit_message": "Use format specifiers instead of percent format",
+      "changed_files": [
+        "src/marshmallow/utils.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/utils.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.87,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "19bc97b534251332483f388bbed87b350c2a5915",
+      "commit_message": "Improve type hint formatting for Field, Nested and Function fields to resolve PyCharm warnings (#2657)",
+      "changed_files": [
+        "AUTHORS.rst",
+        "CHANGELOG.rst",
+        "pyproject.toml",
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.83,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "6654eafc9f25a19603e5063ff8d8d12ea7ee2716",
+      "commit_message": "Remove Fern sponsor message",
+      "changed_files": [
+        "README.rst",
+        "docs/_static/css/sponsor-message.css",
+        "docs/conf.py",
+        "docs/index.rst"
+      ],
+      "changed_python_files": [
+        "docs/conf.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.99,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "91d5c0cabd5f3100b9fe91360e59a7b52e51a93b",
+      "commit_message": "Document \"absolute\" URL field parameter (#2327)",
+      "changed_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.87,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "0a7d543124121bfdf8be12954992b34fb44be767",
+      "commit_message": "Replace typing.Dict/List/Tuple/Type with dict/list/tuple/type",
+      "changed_files": [
+        "src/marshmallow/class_registry.py",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/class_registry.py",
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.01,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "230aa279eff41ff7e27dc1e0ea11911aacff0115",
+      "commit_message": "Use ZoneInfo instead of pytz",
+      "changed_files": [
+        "pyproject.toml",
+        "tests/base.py",
+        "tests/test_deserialization.py",
+        "tests/test_serialization.py",
+        "tests/test_utils.py"
+      ],
+      "changed_python_files": [
+        "tests/base.py",
+        "tests/test_deserialization.py",
+        "tests/test_serialization.py",
+        "tests/test_utils.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.53,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/test_deserialization.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py"
+        ],
+        "selected_count": 8,
+        "details": {
+          "tests/base.py": {
+            "confidence": 1.0,
+            "reasons": [
+              "directly_modified_test"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 1231,
+        "passed_count": 1231,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": null,
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "4976d834ceb72402dafa41137d2d037b2a1ed123",
+      "commit_message": "Fix _deserialize type hints",
+      "changed_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 4.14,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "eeba835871721317f4340eed04e87818dee8bf15",
+      "commit_message": "Fix _serialize type hints",
+      "changed_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.62,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "c914b2a9f5848a29cc1b71d2b16928f0dd73c9e1",
+      "commit_message": "Fix generic schema type hints",
+      "changed_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.07,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "457d9a71197c63a4119f744f8a1c3d31a4643744",
+      "commit_message": "Typing: replace \"type\" with specific metaclass",
+      "changed_files": [
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py",
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 3.51,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "6e2b31297598ba987d54c34f101fb8eb78dce690",
+      "commit_message": "Add Fern sponsor message",
+      "changed_files": [
+        "README.rst",
+        "docs/_static/css/sponsor-message.css",
+        "docs/conf.py",
+        "docs/index.rst"
+      ],
+      "changed_python_files": [
+        "docs/conf.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.13,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "7b62f3e1f21e263ca932321a15d03c5cb28d63f1",
+      "commit_message": "Normalize benchmark per dump for object count",
+      "changed_files": [
+        "performance/benchmark.py"
+      ],
+      "changed_python_files": [
+        "performance/benchmark.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.52,
+        "selected_test_files": [],
+        "selected_count": 0,
+        "details": {}
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "593b7fecd4eb3bf24480d18b942703ee9ccf8a04",
+      "commit_message": "Simplify tuple-keyed hook name and config dicts",
+      "changed_files": [
+        "src/marshmallow/decorators.py",
+        "src/marshmallow/schema.py",
+        "src/marshmallow/types.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/decorators.py",
+        "src/marshmallow/schema.py",
+        "src/marshmallow/types.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.06,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "99103a675fa469c05ea93c4cbc91d47fd5556eee",
+      "commit_message": "Remove leaky lru_cache (#2277)",
+      "changed_files": [
+        "AUTHORS.rst",
+        "CHANGELOG.rst",
+        "src/marshmallow/schema.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.77,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "c8ce7e87027fdd4d5565c85f82b2008726edc4a1",
+      "commit_message": "Add a many Meta option",
+      "changed_files": [
+        "src/marshmallow/schema.py",
+        "tests/test_options.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/schema.py",
+        "tests/test_options.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.71,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.55,
+            "reasons": [
+              "transitive_import(depth=2)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "58fbbcd3446ade39ea3be83ce9ee9170acf0230b",
+      "commit_message": "Encapsulate timestamp boolean check in utils",
+      "changed_files": [
+        "src/marshmallow/fields.py",
+        "src/marshmallow/utils.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py",
+        "src/marshmallow/utils.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.91,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "6e72beb7daa09ba993a2d3d1738ef2f75a95f607",
+      "commit_message": "DateTime field: reject timestamp True/False",
+      "changed_files": [
+        "src/marshmallow/fields.py",
+        "tests/test_deserialization.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py",
+        "tests/test_deserialization.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.05,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "845f573c0db34c65a7eb9092af20fa7fe7b1404d",
+      "commit_message": "DateTime field: allow timestamp 0",
+      "changed_files": [
+        "src/marshmallow/fields.py",
+        "tests/test_deserialization.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py",
+        "tests/test_deserialization.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.83,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "2d6e5c2a039774579475e1866d60a7489d9d2d44",
+      "commit_message": "Use format specifiers instead of percent format",
+      "changed_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 1.51,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "2c937af347b4708a9a777bb20f1c4bf6d29472c9",
+      "commit_message": "Address deprecation warnings in tests (#2252)",
+      "changed_files": [
+        "examples/flask_example.py",
+        "examples/peewee_example.py",
+        "tests/test_deserialization.py",
+        "tests/test_schema.py",
+        "tests/test_serialization.py"
+      ],
+      "changed_python_files": [
+        "examples/flask_example.py",
+        "examples/peewee_example.py",
+        "tests/test_deserialization.py",
+        "tests/test_schema.py",
+        "tests/test_serialization.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.46,
+        "selected_test_files": [
+          "tests/test_deserialization.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py"
+        ],
+        "selected_count": 3,
+        "details": {
+          "tests/test_deserialization.py": {
+            "confidence": 1.0,
+            "reasons": [
+              "directly_modified_test"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 1.0,
+            "reasons": [
+              "directly_modified_test"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 1.0,
+            "reasons": [
+              "directly_modified_test"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "commit_hash": "166e123c8f92e4cb2917d79d5a8418ba3fed657f",
+      "commit_message": "Fix mypy type ignore",
+      "changed_files": [
+        "src/marshmallow/__init__.py"
+      ],
+      "changed_python_files": [
+        "src/marshmallow/__init__.py"
+      ],
+      "selector": {
+        "thoroughness": "standard",
+        "time_ms": 0.97,
+        "selected_test_files": [
+          "tests/base.py",
+          "tests/conftest.py",
+          "tests/foo_serializer.py",
+          "tests/mypy_test_cases/test_class_registry.py",
+          "tests/mypy_test_cases/test_validation_error.py",
+          "tests/test_decorators.py",
+          "tests/test_deserialization.py",
+          "tests/test_error_store.py",
+          "tests/test_fields.py",
+          "tests/test_options.py",
+          "tests/test_registry.py",
+          "tests/test_schema.py",
+          "tests/test_serialization.py",
+          "tests/test_utils.py",
+          "tests/test_validate.py",
+          "tests/test_version_attributes.py"
+        ],
+        "selected_count": 16,
+        "details": {
+          "tests/base.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/conftest.py": {
+            "confidence": 0.75,
+            "reasons": [
+              "transitive_import(depth=1)"
+            ]
+          },
+          "tests/foo_serializer.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_class_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/mypy_test_cases/test_validation_error.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_decorators.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_deserialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_error_store.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_fields.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_options.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_registry.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_schema.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_serialization.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_utils.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_validate.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          },
+          "tests/test_version_attributes.py": {
+            "confidence": 0.95,
+            "reasons": [
+              "direct_import"
+            ]
+          }
+        }
+      },
+      "actual_test_run": {
+        "total_tests_run": 0,
+        "passed_count": 0,
+        "failed_count": 0,
+        "error_count": 0,
+        "run_error": "pytest exit code 4. stderr: ImportError while loading conftest '/Users/macmini/Desktop/Antigravity/marshmallow-test/tests/conftest.py'.\ntests/conftest.py:5: in <module>\n    from tests.base import Blog, User, UserSchema\ntests/base.py:8: in <module>\n    import pytz\nE   ModuleNotFoundError: No module named 'pytz'\n. stdout: ",
+        "failed_test_nodeids": [],
+        "error_test_nodeids": [],
+        "failed_test_files": [],
+        "errored_test_files": []
+      },
+      "analysis": {
+        "failed_files_correctly_selected": [],
+        "failed_files_missed_by_selector": [],
+        "miss_count": 0,
+        "fail_count": 0
+      }
+    }
+  ]
+}
