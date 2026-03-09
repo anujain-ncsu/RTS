@@ -12,23 +12,23 @@ The system is a **CLI tool** designed to be downloaded and run locally on any ma
 
 ## Target Repository
 
-**Selected: [encode/httpx](https://github.com/encode/httpx)**
+**Selected: [marshmallow-code/marshmallow](https://github.com/marshmallow-code/marshmallow)**
 
 | Attribute | Value |
 |-----------|-------|
-| Commits | 1,523 |
-| Contributors | 238 |
-| Layout | `httpx/` (source) + `tests/` (tests) |
+| Commits | 2,957 (non-merge) |
+| Contributors | 200+ |
+| Layout | `src/marshmallow/` (source) + `tests/` (tests) |
 | Test framework | pytest |
-| Test coverage | 100% (advertised) |
-| License | BSD-3-Clause |
+| Tests | 1,240 tests |
+| License | MIT |
 
-**Why httpx:**
-- 100% test coverage — ideal for validating our selector's recall
-- Clean `httpx/` + `tests/` layout with clear separation
-- Moderate size with rich internal dependencies (HTTP client = many layers)
-- Well-known, modern Python library with clear import structure
-- Multiple internal modules (transports, models, auth, etc.) for testing transitive dependencies
+**Why marshmallow:**
+- Pure in-memory data transformation — **zero network/server dependencies** in tests
+- Clean `src/marshmallow/` + `tests/` layout with clear separation
+- Rich internal dependency graph (schema, fields, decorators, validators, utils, error_store, class_registry, etc.)
+- Well-known, mature Python library with clear import structure
+- Tests run in seconds with no timeouts — ideal for historical commit validation
 
 ---
 
@@ -102,26 +102,26 @@ To avoid full re-indexing on every run, the indexer supports an incremental mode
   "repository": "/path/to/repo",
   "created_at": "2026-03-08T21:00:00Z",
   "files": {
-    "httpx/_models.py": {
+    "src/marshmallow/fields.py": {
       "type": "source",
-      "imports": ["httpx/_urls.py", "httpx/_content.py"],
-      "symbols": ["Request", "Response"],
-      "imported_by": ["tests/test_models.py", "tests/test_api.py"]
+      "imports": ["src/marshmallow/utils.py", "src/marshmallow/validate.py"],
+      "symbols": ["String", "Integer", "Nested"],
+      "imported_by": ["tests/test_fields.py", "tests/test_schema.py"]
     },
-    "tests/test_models.py": {
+    "tests/test_fields.py": {
       "type": "test",
-      "imports": ["httpx/_models.py"],
-      "test_functions": ["test_request", "test_response"]
+      "imports": ["src/marshmallow/fields.py"],
+      "test_functions": ["test_string_field", "test_integer_field"]
     }
   },
   "source_to_tests": {
-    "httpx/_models.py": [
-      {"test_file": "tests/test_models.py", "relationship": "direct_import", "confidence": 0.95},
-      {"test_file": "tests/test_api.py", "relationship": "transitive", "confidence": 0.70}
+    "src/marshmallow/fields.py": [
+      {"test_file": "tests/test_fields.py", "relationship": "direct_import", "confidence": 0.95},
+      {"test_file": "tests/test_schema.py", "relationship": "transitive", "confidence": 0.70}
     ]
   },
   "test_to_sources": {
-    "tests/test_models.py": ["httpx/_models.py"]
+    "tests/test_fields.py": ["src/marshmallow/fields.py"]
   }
 }
 ```
@@ -247,7 +247,7 @@ RTS/
 | **Overall Indexing** | O(N × L) | O(N + E) | Dominated by AST parsing |
 | **Overall Selection** | O(C × (N + E)) | O(N) | Fast for small C (typical diffs) |
 
-For httpx (~50 Python source files, ~200 import edges): indexing should take **< 3 seconds**, selection should be **< 50ms**.
+For marshmallow (~13 Python source files, ~50 import edges): indexing should take **< 1 second**, selection should be **< 20ms**.
 
 ---
 
@@ -334,30 +334,31 @@ python -m pytest tests/ -v --cov=rts --cov-report=term-missing
 8. `test_scorer.py` — Verify confidence scores combine correctly
 9. `test_cli.py` — Integration tests using Click's `CliRunner`
 
-### Live Validation Against httpx
+### Live Validation Against marshmallow
 
 ```bash
-# Clone httpx
-git clone https://github.com/encode/httpx /tmp/httpx-test
+# Clone marshmallow (checkout 3.x for Python 3.9 compat)
+git clone https://github.com/marshmallow-code/marshmallow /path/to/marshmallow-test
+cd /path/to/marshmallow-test && git checkout 3.26.2
 
 # Index it
 cd /Users/macmini/Desktop/Antigravity/RTS
-python -m rts index /tmp/httpx-test
+python -m rts index /path/to/marshmallow-test
 
-# Simulate a change to httpx/_models.py and select tests
-python -m rts select --repo /tmp/httpx-test --files httpx/_models.py --thoroughness standard
+# Simulate a change to src/marshmallow/fields.py and select tests
+python -m rts select --repo /path/to/marshmallow-test --files src/marshmallow/fields.py --thoroughness standard
 
-# Verify output contains expected tests (e.g., test_models.py should appear)
+# Verify output contains expected tests (e.g., test_fields.py should appear)
 ```
 
 ### Performance Benchmarks
 
 ```bash
 # Time the indexer
-time python -m rts index /tmp/httpx-test
+time python -m rts index /path/to/marshmallow-test
 
 # Time the selector (should be < 1 second)
-time python -m rts select --repo /tmp/httpx-test --files httpx/_models.py --thoroughness thorough
+time python -m rts select --repo /path/to/marshmallow-test --files src/marshmallow/fields.py --thoroughness thorough
 ```
 
 ---

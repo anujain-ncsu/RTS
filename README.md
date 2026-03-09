@@ -99,18 +99,18 @@ JSON with confidence scores (0.0 – 1.0):
 
 ```json
 {
-  "changed_files": ["httpx/_models.py"],
+  "changed_files": ["src/marshmallow/fields.py"],
   "thoroughness": "standard",
   "selected_tests": [
     {
-      "test_file": "tests/test_models.py",
-      "test_functions": ["test_request", "test_response"],
+      "test_file": "tests/test_fields.py",
+      "test_functions": ["test_string_field", "test_integer_field"],
       "confidence": 0.95,
       "reasons": ["direct_import"]
     }
   ],
   "total_tests_selected": 1,
-  "total_tests_in_suite": 37,
+  "total_tests_in_suite": 12,
   "selection_time_ms": 0.5
 }
 ```

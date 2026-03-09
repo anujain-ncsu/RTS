@@ -7,7 +7,7 @@
 | # | Question | Decision |
 |---|----------|----------|
 | 1 | Language to analyze | **Python** — leverage `ast` module for static analysis |
-| 2 | Public repository | **encode/httpx** — 100% test coverage, clean layout, rich internal deps |
+| 2 | Public repository | **marshmallow-code/marshmallow** — pure Python serialization, no network deps, rich internal dependency graph |
 | 3 | Interface | **CLI only** — no web service for now |
 | 4 | Index persistence | **Local file-based** (JSON) |
 | 5 | Diff input formats | **All three**: raw unified diff, commit range, list of changed files |
