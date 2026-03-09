@@ -8,11 +8,11 @@ from typing import Any
 from rts.analyzers.base import LanguageAnalyzer, ParseResult
 
 
-class GoAnalyzer:
+class GoAnalyzer(LanguageAnalyzer):
     """Analyzer for Go files using regex mapping."""
 
     def __init__(self) -> None:
-        self.import_re = re.compile(r'import\s+"([^"]+)"')
+        self.import_re = re.compile(r'^import\s+(?:[\w.]+\s+)?"([^"]+)"', re.MULTILINE)
         self.import_block_re = re.compile(r'import\s+\((.*?)\)', re.DOTALL)
         self.import_line_re = re.compile(r'"([^"]+)"')
         self.test_func_re = re.compile(r'^func\s+(Test\w+|Benchmark\w+)\s*\(', re.MULTILINE)
@@ -28,7 +28,7 @@ class GoAnalyzer:
     def parse_file(self, filepath: Path, rel_path: str) -> ParseResult:
         try:
             content = filepath.read_text(encoding="utf-8")
-        except OSError:
+        except (OSError, UnicodeDecodeError):
             return ParseResult(rel_path, [], [], [], parse_error=True)
 
         imports: list[str] = []
@@ -42,6 +42,9 @@ class GoAnalyzer:
             block_content = block_match.group(1)
             for line_match in self.import_line_re.finditer(block_content):
                 imports.append(line_match.group(1))
+
+        # Deduplicate
+        imports = list(dict.fromkeys(imports))
 
         test_funcs = [m.group(1) for m in self.test_func_re.finditer(content)]
 

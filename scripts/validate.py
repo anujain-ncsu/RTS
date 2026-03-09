@@ -194,6 +194,18 @@ def run_selector(index_data, changed_python_files, thoroughness):
                 "reasons": reasons,
             }
 
+    import re
+    test_pattern = re.compile(r"^tests/.*_test.*\.py|.*test_.*\.py")
+    for changed_file in changed_python_files:
+        if test_pattern.search(changed_file) or (
+            changed_file in index_data.files and index_data.files[changed_file].file_type == FileType.TEST
+        ):
+            if changed_file not in selected:
+                selected[changed_file] = {
+                    "confidence": 1.0,
+                    "reasons": ["directly_modified_test"],
+                }
+
     return selected
 
 
@@ -478,6 +490,7 @@ def main():
         "total_commits_analyzed": len(results),
         "commits_with_test_failures": commits_with_failures,
         "commits_with_selector_misses": commits_with_misses,
+        "trivial_skipped": trivial_skipped,
         "total_failed_test_files_across_all_commits": total_f,
         "total_correctly_selected_failures": total_c,
         "total_missed_failures": total_m,
@@ -493,7 +506,7 @@ def main():
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output = {
         "metadata": {
-            "repository_path": repo_path,
+            "repository_path": f"./{repo_name}",
             "repository_name": repo_name,
             "validation_timestamp": datetime.now(timezone.utc).isoformat(),
             "rts_version": "0.1.0",
@@ -516,6 +529,7 @@ def main():
     print("VALIDATION SUMMARY")
     print("=" * 60)
     print(f"Commits analyzed:           {len(results)}")
+    print(f"Trivial skipped:            {trivial_skipped}")
     print(f"Commits with failures:      {commits_with_failures}")
     print(f"Commits with misses:        {commits_with_misses}")
     print(f"Total failed test files:    {total_f}")

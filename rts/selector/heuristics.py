@@ -62,18 +62,17 @@ class Heuristics:
         for changed_file in changed_files:
             p = Path(changed_file)
             analyzer = self.registry.get_analyzer_for_file(p)
-            if not analyzer:
-                continue
-                
-            lang_test_files = {tf for tf in self._test_files if self.index.files[tf].language == analyzer.language_name}
             
-            # 1. Naming convention: delegate to analyzer
-            analyzer_matches = analyzer.get_heuristic_matches(changed_file, lang_test_files)
-            for candidate, reasons in analyzer_matches.items():
-                if candidate not in already:
-                    matches.setdefault(candidate, []).extend(
-                        [f"{r}({p.name})" for r in reasons]
-                    )
+            if analyzer:
+                lang_test_files = {tf for tf in self._test_files if self.index.files[tf].language is not None and self.index.files[tf].language == analyzer.language_name}
+                
+                # 1. Naming convention: delegate to analyzer
+                analyzer_matches = analyzer.get_heuristic_matches(changed_file, lang_test_files)
+                for candidate, reasons in analyzer_matches.items():
+                    if candidate not in already:
+                        matches.setdefault(candidate, []).extend(
+                            [f"{r}({p.name})" for r in reasons]
+                        )
 
             # 2. Same package: tests in the same directory as the changed file
             source_dir = str(p.parent)

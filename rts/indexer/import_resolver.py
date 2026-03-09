@@ -37,6 +37,7 @@ class ImportResolver:
             httpx/_models.py -> httpx._models
             httpx/__init__.py -> httpx
             tests/test_models.py -> tests.test_models
+            src/marshmallow/fields.py -> src.marshmallow.fields AND marshmallow.fields
         """
         for file_path in python_files:
             p = Path(file_path)
@@ -52,6 +53,14 @@ class ImportResolver:
 
             if module_path:
                 self._module_to_file[module_path] = file_path
+
+                # Handle src layout: src/pkg/mod.py should also register as pkg.mod
+                # because `src/` is not a Python package — its children are
+                # the top-level packages (PEP 517 / flit / setuptools src layout).
+                if module_path.startswith("src."):
+                    stripped = module_path[4:]  # remove "src."
+                    if stripped:
+                        self._module_to_file[stripped] = file_path
 
     def resolve(
         self, import_info: ImportInfo, source_file: str

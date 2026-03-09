@@ -4,13 +4,13 @@ from __future__ import annotations
 from pathlib import Path
 
 from rts.analyzers.base import LanguageAnalyzer, ParseResult
-from rts.indexer.ast_parser import ASTParser, ImportInfo, ParseResult as ASTParseResult
+from rts.indexer.ast_parser import ASTParser, ImportInfo
 from rts.indexer.regex_parser import RegexParser
 from rts.indexer.import_resolver import ImportResolver
 from rts.indexer.test_classifier import TestClassifier
 
 
-class PythonAnalyzer:
+class PythonAnalyzer(LanguageAnalyzer):
     """Analyzer for Python files using AST and regex fallback."""
 
     def __init__(self) -> None:
@@ -89,12 +89,17 @@ class PythonAnalyzer:
         clean_stem = source_stem.lstrip("_")
         test_name = f"test_{clean_stem}"
 
-        test_basename_map: dict[str, str] = {}
+        test_basename_map: dict[str, list[str]] = {}
         for tf in test_files:
             basename = Path(tf).stem
-            test_basename_map[basename] = tf
+            if basename not in test_basename_map:
+                test_basename_map[basename] = []
+            test_basename_map[basename].append(tf)
 
-        if test_name in test_basename_map:
-            matches[test_basename_map[test_name]] = ["naming_convention"]
+        test_names = [f"test_{clean_stem}", f"{clean_stem}_test"]
+        for test_name in test_names:
+            if test_name in test_basename_map:
+                for tf in test_basename_map[test_name]:
+                    matches.setdefault(tf, []).append("naming_convention")
 
         return matches

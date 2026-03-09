@@ -11,10 +11,10 @@ class RustAnalyzer(LanguageAnalyzer):
     """Analyzer for Rust files using regex mapping."""
 
     def __init__(self) -> None:
-        self.use_re = re.compile(r'use\s+([a-zA-Z0-9_:]+)')
+        self.use_re = re.compile(r'use\s+([a-zA-Z0-9_:{},\s]+)')
         self.mod_re = re.compile(r'mod\s+([a-zA-Z0-9_]+)\s*;')
         self.inline_test_re = re.compile(r'#\[cfg\(test\)\]\s*mod\s+tests')
-        self.test_func_re = re.compile(r'#\[tokio::test\]|#\[test\]')
+        self.test_func_re = re.compile(r'#\[(?:tokio|actix_rt|async_std|[\w_]+)::test\]|#\[test\]')
 
     @property
     def language_name(self) -> str:
@@ -40,12 +40,12 @@ class RustAnalyzer(LanguageAnalyzer):
 
         # Special marker for inline tests:
         # We don't extract the actual function names for rust inline tests yet
+        test_funcs = []
         if self.inline_test_re.search(content):
-            test_funcs = ["__inline_tests__"]
-        else:
-            test_funcs = []
-            if self.test_func_re.search(content):
-                test_funcs.append("__external_tests__")
+            test_funcs.append("__inline_tests__")
+            
+        if self.test_func_re.search(content):
+            test_funcs.append("__external_tests__")
 
         return ParseResult(
             file_path=rel_path,
@@ -77,13 +77,20 @@ class RustAnalyzer(LanguageAnalyzer):
                 # `use crate::foo::bar`
                 if imp.startswith("crate::"):
                     parts = imp.split("::")
+                    parts = [p for p in parts if p != "crate"]
+                    if not parts:
+                        continue
+                        
+                    target_stem = parts[-1]
                     # Try to match the path segments `src/foo/bar.rs` or `src/foo.rs`
                     # Heuristic: just check if any part substring matches an actual file
                     for f in all_files_in_lang:
                         if not f.endswith(".rs"):
                             continue
                         f_stem = Path(f).stem
-                        if f_stem in parts:
+                        if f_stem == target_stem:
+                            resolved_files.add(f)
+                        elif f_stem == "mod" and Path(f).parent.name == target_stem:
                             resolved_files.add(f)
 
         return list(resolved_files)
@@ -92,7 +99,8 @@ class RustAnalyzer(LanguageAnalyzer):
         self, rel_path: str, test_functions: list[str] | None = None
     ) -> bool:
         # In rust, files in tests/ are integration tests
-        if "tests/" in rel_path or "tests\\" in rel_path:
+        normalized_parts = Path(rel_path).parts
+        if "tests" in normalized_parts:
             return True
         # If it contains an inline test module or #[test] functions, treat it as a source file that *has* tests
         # We model this by saying the file tests itself in `get_heuristic_matches`.

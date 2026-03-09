@@ -117,7 +117,7 @@ class GraphBuilder:
         # Step 9: Add naming convention heuristic mappings
         self._enrich_with_naming_heuristics(files, source_to_tests, test_to_sources)
 
-        languages = list({analyzer.language_name for analyzer in self.registry.get_all_analyzers()})
+        languages = sorted({analyzer.language_name for analyzer in self.registry.get_all_analyzers()})
 
         index = IndexData(
             version="1.1",
@@ -171,8 +171,12 @@ class GraphBuilder:
             if not analyzer:
                 continue
 
-            result = analyzer.parse_file(full_path, rel_path)
-            results[rel_path] = result
+            try:
+                result = analyzer.parse_file(full_path, rel_path)
+                results[rel_path] = result
+            except Exception as e:
+                logger.error("Analyzer error parsing %s: %s", rel_path, e, exc_info=True)
+                continue
 
         return results
 

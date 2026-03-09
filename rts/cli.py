@@ -264,6 +264,22 @@ def select(
                     reasons=reasons,
                 )
 
+    import re
+    test_pattern = re.compile(r"^tests/.*_test.*\.py|.*test_.*\.py")
+    for changed_file in changed_files:
+        if test_pattern.search(changed_file) or (
+            changed_file in index_data.files and index_data.files[changed_file].file_type == FileType.TEST
+        ):
+            if changed_file not in selected:
+                test_info = index_data.files.get(changed_file)
+                test_funcs = test_info.test_functions if test_info else []
+                selected[changed_file] = SelectedTest(
+                    test_file=changed_file,
+                    test_functions=test_funcs,
+                    confidence=1.0,
+                    reasons=["directly_modified_test"],
+                )
+
     elapsed_ms = (time.time() - start) * 1000
 
     # Sort by confidence (highest first)
